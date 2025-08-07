@@ -158,6 +158,24 @@ body {
   }
 }
 
+/* iPad-specific styles */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .min-h-screen {
+    min-height: 100vh;
+    height: 100%;
+  }
+  
+  body {
+    height: 100vh;
+    overflow: auto;
+  }
+  
+  /* Ensure content fills iPad screen */
+  html, body, #__next, main {
+    height: 100%;
+  }
+}
+
 /* Improve touch targets on mobile */
 @media (max-width: 640px) {
   button, a {

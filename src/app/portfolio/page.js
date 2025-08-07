@@ -70,9 +70,10 @@ export default function PortfolioPage() {
 
   return (
     <div 
-      className="bg-[var(--background)] text-[var(--foreground)] overflow-y-auto overflow-x-hidden py-22 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 md:px-8 lg:px-[30px] relative custom-scrollbar" 
+      className="bg-[var(--background)] text-[var(--foreground)] overflow-y-auto overflow-x-hidden py-22 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 md:px-10 lg:px-[30px] relative custom-scrollbar" 
       style={{
         minHeight: '100vh',
+        height: '100%',
         scrollbarWidth: 'thin', 
         scrollbarColor: 'var(--nav-text) var(--background)',
       }}
@@ -180,11 +181,11 @@ export default function PortfolioPage() {
           I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
         </p>
         <Link href="/contact">
-          <button className="group relative inline-flex items-center px-6 sm:px-8 py-3 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] font-bold text-sm">
+          <button className="group relative inline-flex items-center px-6 sm:px-8 py-3 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] active:text-[var(--nav-text-hover)] font-bold text-sm active:scale-95">
             <span className="relative z-10">Get In Touch</span>
             {/* Animated background */}
             <span
-              className="absolute inset-0 bg-[var(--primary)] translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"
+              className="absolute inset-0 bg-[var(--primary)] translate-x-full group-hover:translate-x-0 group-active:translate-x-0 transition-transform duration-300 ease-out z-0"
               aria-hidden="true"
             ></span>
           </button>

@@ -49,7 +49,7 @@ const CircularProgress = ({ percentage, skill }) => {
     };
 
     // Run initial visibility check after a short delay to ensure DOM is ready
-    setTimeout(checkInitialVisibility, 100);
+    setTimeout(checkInitialVisibility, 300);
 
     // Add resize listener
     window.addEventListener("resize", handleResize);
@@ -137,8 +137,8 @@ const CircularProgress = ({ percentage, skill }) => {
               rotate: 0,
               transition: {
                 duration:
-                  hasBeenViewed.current || animationComplete ? 0.3 : 1.8,
-                ease: [0.25, 0.1, 0.25, 1],
+                  hasBeenViewed.current || animationComplete ? 0.3 : 2.2,
+                ease: [0.17, 0.67, 0.83, 0.97], // Improved easing for smoother animation
                 delay: hasBeenViewed.current || animationComplete ? 0 : 0.2,
               },
             }}
@@ -159,7 +159,7 @@ const CircularProgress = ({ percentage, skill }) => {
                 setIsInView(false);
               }
             }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px", amount: 0.3 }}
           />
         </svg>
         {/* Percentage text */}
@@ -210,11 +210,17 @@ const CircularProgress = ({ percentage, skill }) => {
                     }
                     end={percentage}
                     duration={
-                      hasBeenViewed.current || animationComplete ? 0 : 2
+                      hasBeenViewed.current || animationComplete ? 0 : 2.2
                     }
                     delay={hasBeenViewed.current || animationComplete ? 0 : 1.2}
                     preserveValue={true}
                     redraw={false}
+                    useEasing={true}
+                    easingFn={(t, b, c, d) => {
+                      // Custom easing function for smoother animation
+                      // t: current time, b: beginning value, c: change in value, d: duration
+                      return c * ((t = t / d - 1) * t * t + 1) + b;
+                    }}
                   />
                   %
                 </>
@@ -318,10 +324,10 @@ const About = () => {
           viewport={{ once: true }}
           variants={fadeIn}
         >
-          <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold text-[var(--nav-text)]/20 absolute top-0 left-0 right-0 text-center">
+          <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold text-[var(--nav-text)]/20 absolute top-0 left-0 right-0 text-center sm:pt-3">
             RESUME
           </h1>
-          <h2 className="text-3xl md:text-3xl lg:text-5xl font-extrabold text-center relative z-10 text-[var(--foreground)] pt-2 md:pt-6 lg:pt-6 secondary-heading">
+          <h2 className="text-3xl md:text-3xl lg:text-6xl font-extrabold text-center relative z-10 text-[var(--foreground)] pt-2 md:pt-6 lg:pt-8 secondary-heading">
             ABOUT <span className="text-yellow-300">ME</span>
           </h2>
 
@@ -444,13 +450,13 @@ const About = () => {
               >
                 <Link
                   href="https://drive.google.com/file/d/1KmwX2FZbvFtkcJurkiPQvm5l3P6F4ufA/view?usp=sharing"
-                  className="inline-flex items-center px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full border-2 border-[var(--primary)] text-[var(--foreground)] text-xs sm:text-sm md:text-base font-bold hover:bg-[var(--primary)] hover:text-[var(--background)] transition-all duration-300"
+                  className="group inline-flex items-center px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full border-2 border-[var(--primary)] text-[var(--foreground)] text-xs sm:text-sm md:text-base font-bold hover:bg-[var(--primary)] hover:text-[var(--background)] active:bg-[var(--primary)] active:text-[var(--background)] transition-all duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   DOWNLOAD CV
                   <svg
-                    className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5"
+                    className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 transform group-hover:rotate-12 group-active:rotate-12 transition-transform duration-300"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -642,7 +648,7 @@ const About = () => {
                     WEB DEVELOPER{" "}
                     <span className="text-[var(--nav-text)]">— FULLSTACK</span>
                   </h3>
-                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words">
+                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words sm:text-justify md:text-justify lg:text-justify">
                     I am a skilled Full-Stack Web Developer with hands-on experience in building responsive, high-performance web applications using modern technologies like HTML, CSS, JavaScript, Bootstrap 5, Tailwind CSS, and frameworks such as Next.js and NestJS. I have a solid understanding of both frontend and backend development, enabling me to create dynamic and data-driven websites. I work efficiently with databases like MongoDB, MySQL, and Firebase to build secure and scalable solutions.
                   </p>
                 </motion.div>
@@ -689,7 +695,7 @@ const About = () => {
                       — UI/UX DESIGNER
                     </span>
                   </h3>
-                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words">
+                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words sm:text-justify md:text-justify lg:text-justify">
                     As a Mobile Frontend Developer, I specialize in building visually appealing and performance-optimized mobile applications using Flutter. My focus is on crafting clean UI/UX designs that provide a seamless experience across both Android and iOS devices. I have experience integrating APIs, managing responsive layouts, and utilizing Flutter widgets to develop fast, functional, and modern mobile frontends. Whether it's a small business app or a startup MVP, I can transform design concepts into real, working applications that stand out in today's competitive mobile market.
                   </p>
                 </motion.div>
@@ -737,7 +743,7 @@ const About = () => {
                     AI{" "}
                     <span className="text-[var(--nav-text)]">— Integration </span>
                   </h3>
-                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words">
+                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words sm:text-justify md:text-justify lg:text-justify">
                     I have a growing interest and working experience in integrating AI-powered tools and technologies into modern applications. From using AI-based APIs for chatbots and data analysis to experimenting with machine learning workflows in Python, I continuously explore innovative solutions to enhance user experience and automation. I stay updated with the latest trends in artificial intelligence and enjoy combining them with web and mobile technologies to create intelligent, future-ready digital products.
                   </p>
                 </motion.div>
@@ -780,7 +786,8 @@ const About = () => {
                       — SUPERIOR UNIVERSITY LAHORE
                     </span>
                   </h3>
-                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words">
+                  <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-relaxed sm:leading-relaxed md:leading-relaxed tracking-wide max-w-full overflow-hidden break-words sm:text-justify md:text-justify lg:text-justify">
+
                      I am currently pursuing a Bachelor's degree in Software Engineering (BSSE) from Superior University, Lahore – Gold Campus. My academic journey has equipped me with a solid foundation in core software development principles, including programming, database management, web development, and software design. Being part of a dynamic learning environment has allowed me to work on real-world projects, collaborate in teams, and continuously expand my technical and problem-solving skills to prepare for a successful career in the tech industry.
                   </p>
                 </motion.div>
