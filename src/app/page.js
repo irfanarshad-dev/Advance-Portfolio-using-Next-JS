@@ -114,8 +114,8 @@ export default function Home() {
           </p>
           <button
             onClick={toggleAboutModal}
-            className={`group relative inline-flex items-center justify-center sm:px-6 sm:py-2.5 md:px-8 md:py-3 lg:px-10 lg:py-3 mt-4 sm:mt-5 md:mt-6 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] font-bold text-sm sm:text-base md:text-lg ${isVisible ? 'content-button-animate' : 'opacity-0'}`}
-            style={{ textTransform: "uppercase", backgroundColor: 'var(--background)', width: 'auto', minWidth: '200px', maxWidth: '100%' }}
+            className={`group relative inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 lg:px-10 lg:py-3 mt-4 sm:mt-5 md:mt-6 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] font-bold text-sm sm:text-base md:text-lg ${isVisible ? 'content-button-animate' : 'opacity-0'}`}
+            style={{ textTransform: "uppercase", backgroundColor: 'var(--background)', width: 'auto', minWidth: '160px', maxWidth: '100%' }}
           >
             <span className="relative z-10 about-me-btn">More About Me</span>
             {/* Animated yellow background */}
@@ -144,7 +144,7 @@ export default function Home() {
             </span>
           </button>
         </div>
-        {/* Show Navbar at bottom for mobile only */}
+        {/* Show Navbar at bottom for mobile and small tablets */}
         <div className="md:hidden w-full mt-8 sm:mt-10">
           <Navbar />
         </div>

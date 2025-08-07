@@ -95,18 +95,18 @@ export default function Navbar() {
             <Link
               key={item.href}
               href={item.href}
-              className="group flex items-center justify-end"
+              className="group flex items-center justify-center px-1"
             >
               <div
                 className={`
                   flex items-center justify-center
-                  w-10 h-10 rounded-full overflow-hidden
+                  w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden
                   ${isActive ? "bg-[var(--primary)]" : "bg-[var(--nav-bg)]"}
                 `}
               >
                 <span
                   className={`
-                    text-xl flex items-center justify-center
+                    text-lg sm:text-xl flex items-center justify-center
                     ${isActive ? "text-[var(--nav-text-hover)]" : "text-[var(--nav-text)]"}
                   `}
                   style={{ width: "100%", height: "100%" }}
