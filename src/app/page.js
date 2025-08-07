@@ -30,19 +30,19 @@ export default function Home() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col lg:flex-row text-[var(--foreground)] overflow-x-hidden overflow-y-auto transition-all duration-1000 ease-out ${
+      className={`min-h-screen flex flex-col md:flex-row text-[var(--foreground)] overflow-x-hidden overflow-y-auto transition-all duration-1000 ease-out ${
         isVisible ? 'slide-enter' : 'opacity-0'
       }`}
     >
 
       {/* Left side (image + yellow shape) */}
       <div
-        className="flex flex-col w-full lg:w-1/2 items-center relative lg:justify-center pt-6 sm:pt-8 md:pt-10 lg:pt-0 pb-0 lg:pb-0"
-        style={{ minHeight: "35vh", height: "auto" }}
+        className="flex flex-col w-full md:w-1/2 items-center relative md:justify-center pt-6 sm:pt-8 md:pt-4 lg:pt-0 pb-0 md:pb-0"
+        style={{ minHeight: "30vh", height: "auto" }}
       >
-        {/* Yellow Skewed Shape - only on desktop */}
+        {/* Yellow Skewed Shape - desktop and tablet landscape */}
         <div
-          className="hidden lg:block absolute"
+          className="hidden md:block absolute"
           style={{
             position: "fixed",
             height: "200%",
@@ -56,9 +56,9 @@ export default function Home() {
           }}
         ></div>
         
-        {/* Yellow Skewed Shape - mobile version */}
+        {/* Yellow Skewed Shape - mobile and tablet portrait */}
         <div
-          className="lg:hidden absolute top-0 left-0 w-full"
+          className="md:hidden absolute top-0 left-0 w-full"
           style={{
             height: "30vh",
             backgroundColor: "var(--primary)",
@@ -74,11 +74,11 @@ export default function Home() {
         <div
           className={`
             relative mx-auto
-            rounded-full lg:rounded-[30px]
-            w-40 h-40 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[650px]
+            rounded-full md:rounded-[30px]
+            w-40 h-40 sm:w-60 sm:h-60 md:w-[300px] md:h-[300px] lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[650px]
             overflow-hidden
             shadow-lg
-            mt-10 sm:mt-12 md:mt-16 lg:mt-0
+            mt-10 sm:mt-12 md:mt-8 lg:mt-0
             ${isVisible ? 'profile-image-animate' : 'opacity-0'}
           `}
           style={{
@@ -104,8 +104,8 @@ export default function Home() {
       </div>
 
       {/* Main content (centered on right, or under image on mobile/tablet) */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center lg:justify-center justify-start p-4 sm:p-6 md:p-7 lg:p-8 mt-8 sm:mt-10 md:mt-12 lg:mt-0">
-        <div className="text-center lg:text-left space-y-4 sm:space-y-5 md:space-y-6 pt-4 px-3 sm:px-6 md:px-8 lg:px-12 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto lg:mx-0 w-full">
+      <div className="w-full md:w-1/2 flex flex-col items-center md:items-start md:justify-center justify-start p-4 sm:p-6 md:p-5 lg:p-8 mt-8 sm:mt-10 md:mt-0 lg:mt-0">
+        <div className="text-center md:text-left space-y-4 sm:space-y-5 md:space-y-5 pt-4 px-3 sm:px-6 md:px-6 lg:px-12 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto md:mx-0 w-full">
           <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)] ${isVisible ? 'content-title-animate' : 'opacity-0'} tracking-tight leading-tight`}>
             — I&#39;M IRFAN ARSHAD
           </h1>
@@ -144,8 +144,8 @@ export default function Home() {
             </span>
           </button>
         </div>
-        {/* Show Navbar at bottom for mobile/tablet */}
-        <div className="lg:hidden w-full mt-8 sm:mt-10 md:mt-12">
+        {/* Show Navbar at bottom for mobile only */}
+        <div className="md:hidden w-full mt-8 sm:mt-10">
           <Navbar />
         </div>
       </div>
