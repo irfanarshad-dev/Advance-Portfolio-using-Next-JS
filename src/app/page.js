@@ -104,18 +104,18 @@ export default function Home() {
       </div>
 
       {/* Main content (centered on right, or under image on mobile/tablet) */}
-      <div className="w-full md:w-1/2 flex flex-col items-center md:items-start md:justify-center justify-start p-4 sm:p-6 md:p-5 lg:p-8 mt-8 sm:mt-10 md:mt-0 lg:mt-0">
-        <div className="text-center md:text-left space-y-4 sm:space-y-5 md:space-y-5 pt-4 px-3 sm:px-6 md:px-6 lg:px-12 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto md:mx-0 w-full">
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)] ${isVisible ? 'content-title-animate' : 'opacity-0'} tracking-tight leading-tight`}>
+      <div className="w-full md:w-1/2 flex flex-col items-center md:items-start md:justify-center justify-start py-2 sm:p-6 md:p-5 lg:p-8 mt-0 sm:mt-10 md:mt-0 lg:mt-0">
+        <div className="text-center md:text-left space-y-4 sm:space-y-5 md:space-y-5 sm:px-6 md:px-6 lg:px-12 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg md:mx-0 w-full">
+          <h1 className={`text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-10 py-2 font-bold text-[var(--primary)] ${isVisible ? 'content-title-animate' : 'opacity-0'} tracking-tight leading-tight`}>
             — I&#39;M IRFAN ARSHAD
           </h1>
-          <p className={`text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-justify text-[var(--foreground)] mb-2 sm:mb-3 md:mb-4 ${isVisible ? 'content-text-animate' : 'opacity-0'}`}>
+          <p className={`text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-justify text-[var(--foreground)] m-2 sm:mb-3 md:mb-4 ${isVisible ? 'content-text-animate' : 'opacity-0'}`}>
             I&#39;m a <span className="text-[var(--primary)] font-semibold">Full Stack Developer</span> with expertise in creating responsive and user-friendly web applications. I specialize in React, Next.js, and Node.js, and I'm passionate about building innovative solutions that solve real-world problems.
           </p>
           <button
             onClick={toggleAboutModal}
-            className={`group relative inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 lg:px-10 lg:py-3 mt-4 sm:mt-5 md:mt-6 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] font-bold text-sm sm:text-base md:text-lg ${isVisible ? 'content-button-animate' : 'opacity-0'}`}
-            style={{ textTransform: "uppercase", backgroundColor: 'var(--background)', width: 'auto', minWidth: '160px', maxWidth: '100%' }}
+            className={`group relative inline-flex items-center justify-center sm:px-6 sm:py-2.5 md:px-8 md:py-3 lg:px-10 lg:py-3 mt-4 sm:mt-5 md:mt-6 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] font-bold text-sm sm:text-base md:text-lg ${isVisible ? 'content-button-animate' : 'opacity-0'}`}
+            style={{ textTransform: "uppercase", backgroundColor: 'var(--background)', width: 'auto', minWidth: '200px', maxWidth: '100%' }}
           >
             <span className="relative z-10 about-me-btn">More About Me</span>
             {/* Animated yellow background */}
