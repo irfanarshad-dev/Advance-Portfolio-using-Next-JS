@@ -167,6 +167,7 @@ export default function Home() {
               exit={{ scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
             >
+              
               {/* Close button */}
               <button 
                 onClick={toggleAboutModal}
