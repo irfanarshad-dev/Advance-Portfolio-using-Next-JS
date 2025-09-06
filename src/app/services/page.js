@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 
-const PortfolioClient = dynamic(() => import("@/components/PortfolioClient"));
+const ServicesClient = dynamic(() => import("@/components/ServicesClient"));
 const Navbar = dynamic(() => import("@/components/navbar"));
 
 export const metadata = {
-  title: 'Portfolio'
+  title: 'Services'
 };
 
-export default function PortfolioPage() {
+export default function ServicesPage() {
   return (
     <div className="min-h-screen flex flex-col text-[var(--foreground)] overflow-x-hidden bg-[var(--background)]">
       {/* Desktop Navbar */}
@@ -17,7 +17,7 @@ export default function PortfolioPage() {
       
       {/* Main Content */}
       <div className="w-full">
-        <PortfolioClient />
+        <ServicesClient />
       </div>
       
       {/* Mobile Navbar */}

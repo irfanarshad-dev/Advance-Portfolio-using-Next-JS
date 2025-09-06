@@ -6,8 +6,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import WorkIcon from "@mui/icons-material/Work";
 import MailIcon from "@mui/icons-material/Mail";
 import ChatIcon from "@mui/icons-material/Chat";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useTheme } from "@/context/ThemeContext";
 
 const navItems = [
@@ -15,7 +13,7 @@ const navItems = [
   { href: "/about", label: "About", icon: <PersonIcon /> },
   { href: "/portfolio", label: "Portfolio", icon: <WorkIcon /> },
   { href: "/contact", label: "Contact", icon: <MailIcon /> },
-  { href: "/blog", label: "Blog", icon: <ChatIcon /> },
+  { href: "/services", label: "Service", icon: <ChatIcon /> },
 ];
 
 export default function Navbar() {

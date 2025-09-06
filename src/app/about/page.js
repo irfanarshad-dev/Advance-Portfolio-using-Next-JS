@@ -1,6 +1,11 @@
-"use client";
-import About from "@/components/about";
-import Navbar from "@/components/navbar";
+import dynamic from 'next/dynamic';
+
+const About = dynamic(() => import('@/components/about'));
+const Navbar = dynamic(() => import('@/components/navbar'));
+
+export const metadata = {
+    title: 'About'
+};
 
 export default function AboutPage() {
     return (
