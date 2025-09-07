@@ -11,9 +11,36 @@ export default function ContactClient() {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus('Message sent successfully!');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      setSubmitStatus('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -146,8 +173,8 @@ export default function ContactClient() {
             <textarea name="message" value={formData.message} onChange={handleChange} placeholder="YOUR MESSAGE" rows="5" className="w-full bg-[var(--card-bg)] rounded-3xl px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 md:py-4 text-sm sm:text-base text-[var(--foreground)] placeholder-[var(--nav-text)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition-all duration-300 resize-none" required></textarea>
           </div>
 
-          <motion.button type="submit" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="group relative inline-flex items-center px-4 xs:px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] active:text-[var(--nav-text-hover)] font-bold text-xs xs:text-sm sm:text-base mb-6 sm:mb-4 md:mb-2 lg:mb-0 active:scale-95" style={{ textTransform: "uppercase", backgroundColor: 'var(--card-bg)' }}>
-            <span className="relative z-10 pr-4 xs:pr-5 sm:pr-6 md:pr-8">SEND MESSAGE</span>
+          <motion.button type="submit" disabled={isSubmitting} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="group relative inline-flex items-center px-4 xs:px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full border border-[var(--primary)] overflow-hidden transition-colors duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] active:text-[var(--nav-text-hover)] font-bold text-xs xs:text-sm sm:text-base mb-6 sm:mb-4 md:mb-2 lg:mb-0 active:scale-95 disabled:opacity-50" style={{ textTransform: "uppercase", backgroundColor: 'var(--card-bg)' }}>
+            <span className="relative z-10 pr-4 xs:pr-5 sm:pr-6 md:pr-8">{isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}</span>
             <span className="absolute inset-0 bg-[var(--primary)] translate-x-full group-hover:translate-x-0 group-active:translate-x-0 transition-transform duration-300 ease-out z-0" aria-hidden="true"></span>
             <span className="absolute right-0 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[var(--primary)] rounded-full group-hover:bg-[var(--primary-hover)] group-active:bg-[var(--primary-hover)] transition-colors duration-300 cursor-pointer group-hover:text-[var(--nav-text-hover)] group-active:text-[var(--nav-text-hover)]">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="bi bi-arrow-right transition-colors duration-300 text-[var(--nav-text-hover)]" xmlns="http://www.w3.org/2000/svg">
@@ -155,6 +182,11 @@ export default function ContactClient() {
               </svg>
             </span>
           </motion.button>
+          {submitStatus && (
+            <p className={`text-sm mt-2 ${submitStatus.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>
+              {submitStatus}
+            </p>
+          )}
         </motion.form>
       </div>
     </div>

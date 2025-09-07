@@ -38,7 +38,7 @@ export default function HomeClient() {
         </div>
         
         {/* Profile Image Container */}
-        <div className={`relative mx-auto rounded-full lg:rounded-[30px] w-40 h-40 sm:w-60 sm:h-60 md:w-[350px] md:h-[350px] lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[650px] overflow-hidden shadow-lg mt-10 sm:mt-12 md:mt-8 lg:mt-0 ${isVisible ? 'profile-image-animate' : 'opacity-0'}`} style={{ backgroundImage: "url('/Images/Irfan.jpg')", backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "top center", boxShadow: "0 0 10px rgba(0, 0, 0, .9)", zIndex: 11 }}>
+        <div className={`relative mx-auto rounded-full lg:rounded-[30px] w-40 h-40 sm:w-60 sm:h-60 md:w-[350px] md:h-[350px] lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[650px] overflow-hidden shadow-lg mt-10 sm:mt-12 md:mt-8 lg:mt-0 ${isVisible ? 'profile-image-animate' : 'opacity-0'}`} style={{ backgroundImage: "url('/Images/Irfan.png')", backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "top center", boxShadow: "0 0 10px rgba(0, 0, 0, .9)", zIndex: 11 }}>
           <Image src="/Images/Irfan.png" alt="Profile background" fill className="object-cover w-full h-full" style={{ borderRadius: "inherit" }} priority />
         </div>
       </div>
