@@ -1,7 +1,11 @@
 import { MongoClient } from 'mongodb';
 
 const uri = process.env.MONGO_URI;
-const options = {};
+const options = {
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+};
 
 let client;
 let clientPromise;
@@ -10,7 +14,7 @@ if (!process.env.MONGO_URI) {
   throw new Error('Please add your Mongo URI to .env.local');
 }
 
-console.log('MongoDB URI exists:', !!process.env.MONGO_URI);
+
 
 if (process.env.NODE_ENV === 'development') {
   if (!global._mongoClientPromise) {
