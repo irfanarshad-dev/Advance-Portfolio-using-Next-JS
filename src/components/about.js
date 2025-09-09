@@ -85,7 +85,8 @@ const CircularProgress = ({ percentage, skill }) => {
         y: 0,
         scale: 1,
         transition: {
-          duration: hasBeenViewed.current || animationComplete ? 0.3 : 0.7,
+          duration: hasBeenViewed.current || animationComplete ? 0.2 : 0.5,
+          ease: [0.25, 0.46, 0.45, 0.94],
         },
       }}
       viewport={{ once: true }}
@@ -138,9 +139,9 @@ const CircularProgress = ({ percentage, skill }) => {
               rotate: 0,
               transition: {
                 duration:
-                  hasBeenViewed.current || animationComplete ? 0.3 : 2.2,
-                ease: [0.17, 0.67, 0.83, 0.97], // Improved easing for smoother animation
-                delay: hasBeenViewed.current || animationComplete ? 0 : 0.2,
+                  hasBeenViewed.current || animationComplete ? 0.2 : 1.2,
+                ease: [0.25, 0.46, 0.45, 0.94], // Smoother cubic-bezier easing
+                delay: hasBeenViewed.current || animationComplete ? 0 : 0.1,
               },
             }}
             onAnimationComplete={() => {
@@ -182,8 +183,9 @@ const CircularProgress = ({ percentage, skill }) => {
               scale: 1,
               y: 0,
               transition: {
-                duration: 0.5,
-                delay: hasBeenViewed.current || animationComplete ? 0 : 0.8,
+                duration: 0.3,
+                delay: hasBeenViewed.current || animationComplete ? 0 : 0.4,
+                ease: "easeOut",
               },
             }}
             viewport={{ once: true }}
@@ -211,9 +213,9 @@ const CircularProgress = ({ percentage, skill }) => {
                     }
                     end={percentage}
                     duration={
-                      hasBeenViewed.current || animationComplete ? 0 : 2.2
+                      hasBeenViewed.current || animationComplete ? 0 : 1.2
                     }
-                    delay={hasBeenViewed.current || animationComplete ? 0 : 1.2}
+                    delay={hasBeenViewed.current || animationComplete ? 0 : 0.6}
                     preserveValue={true}
                     redraw={false}
                     useEasing={true}
@@ -250,7 +252,9 @@ const CircularProgress = ({ percentage, skill }) => {
           y: 0,
           scale: 1,
           transition: {
-            delay: hasBeenViewed.current || animationComplete ? 0 : 1.5,
+            delay: hasBeenViewed.current || animationComplete ? 0 : 0.8,
+            duration: 0.4,
+            ease: "easeOut",
           },
         }}
         viewport={{ once: true }}
@@ -315,11 +319,11 @@ const About = () => {
   };
 
   return (
-    <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-20 lg:px-[100px]">
-      <div className="container mx-auto px-8">
+    <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-8 sm:py-12 md:py-16 lg:py-20 px-2 sm:px-4 lg:px-[100px]">
+      <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
         {/* About Me Header with Background Text */}
         <motion.div
-          className="relative mb-16"
+          className="relative mb-8 sm:mb-12 md:mb-16"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -334,7 +338,7 @@ const About = () => {
 
           {/* Mobile-only profile image */}
           <motion.div
-            className="sm:hidden mx-auto mt-8 relative w-32 h-32 rounded-full overflow-hidden border-4 border-[var(--primary)] shadow-lg"
+            className="sm:hidden mx-auto mt-6 relative w-24 h-24 xs:w-28 xs:h-28 rounded-full overflow-hidden border-3 border-[var(--primary)] shadow-lg"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
@@ -350,7 +354,7 @@ const About = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-10"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -358,7 +362,7 @@ const About = () => {
         >
           {/* Personal Information */}
           <motion.div variants={fadeIn}>
-            <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 md:mb-8">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6">
               PERSONAL INFOS
             </h3>
 
@@ -397,7 +401,6 @@ const About = () => {
                     </svg>
                   </Link>
                 </p>
-
                 <p className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm md:text-base">
                   <span className="font-bold">Skype:</span> john.doe
                 </p>
@@ -438,7 +441,7 @@ const About = () => {
                 </p>
                 <p className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm md:text-base">
                   <span className="font-bold block sm:inline">Languages:</span>{" "}
-                  <span>Pnjabi, &nbsp;Urdu, &nbsp;English</span>
+                  <span>Punjabi, Urdu, English</span>
                 </p>
               </div>
             </div>
@@ -451,46 +454,41 @@ const About = () => {
               >
                 <Link
                   href="https://drive.google.com/file/d/1KmwX2FZbvFtkcJurkiPQvm5l3P6F4ufA/view?usp=sharing"
-                  className="group inline-flex items-center px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full border-2 border-[var(--primary)] text-[var(--foreground)] text-xs sm:text-sm md:text-base font-bold hover:bg-[var(--primary)] hover:text-[var(--background)] active:bg-[var(--primary)] active:text-[var(--background)] transition-all duration-300"
+                  className="group active:scale-95 relative inline-flex items-center justify-center px-4 py-2 xs:px-6 xs:py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-4 lg:px-10 lg:py-3 rounded-full border border-[var(--primary)] overflow-hidden transition-all duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] font-bold text-xs xs:text-sm sm:text-base md:text-lg"
+                  style={{ textTransform: "uppercase", backgroundColor: 'var(--background)', width: 'auto', minWidth: '160px', maxWidth: '100%' }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  DOWNLOAD CV
-                  <svg
-                    className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 transform group-hover:rotate-12 group-active:rotate-12 transition-transform duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
+                  <span className="relative z-10 whitespace-nowrap pr-6 xs:pr-8 sm:pr-10 md:pr-12">Download CV</span>
+                  <span className="absolute inset-0 bg-[var(--primary)] translate-x-full group-hover:translate-x-0 group-active:translate-x-0 transition-transform duration-300 ease-out z-0" aria-hidden="true"></span>
+                  <span className="absolute right-1 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[var(--primary)] rounded-full group-hover:bg-[var(--primary-hover)] group-active:bg-[var(--primary-hover)] transition-colors duration-300 cursor-pointer text-[var(--nav-text-hover)]">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" className="bi bi-arrow-right transition-colors duration-300 text-[var(--nav-text-hover)] xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12h12M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
                 </Link>
               </motion.div>
             </div>
           </motion.div>
 
           {/* Statistics */}
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
             {/* Years of Experience */}
             <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-4 sm:p-6 md:p-8 rounded-lg transition-colors duration-300"
+              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
               variants={fadeIn}
               whileHover={{ y: -5 }}
             >
               <motion.h3
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--primary)]"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                02<span className="text-xl sm:text-2xl md:text-3xl">+</span>
+                02<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
               </motion.h3>
-              <div className="w-8 sm:w-10 md:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base">
+              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
+              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
                 YEARS OF
                 <br />
                 EXPERIENCE
@@ -499,20 +497,20 @@ const About = () => {
 
             {/* Completed Projects */}
             <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-4 sm:p-6 md:p-8 rounded-lg transition-colors duration-300"
+              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
               variants={fadeIn}
               whileHover={{ y: -5 }}
             >
               <motion.h3
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--primary)]"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                10<span className="text-xl sm:text-2xl md:text-3xl">+</span>
+                10<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
               </motion.h3>
-              <div className="w-8 sm:w-10 md:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base">
+              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
+              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
                 COMPLETED
                 <br />
                 PROJECTS
@@ -521,20 +519,20 @@ const About = () => {
 
             {/* Happy Customers */}
             <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-4 sm:p-6 md:p-8 rounded-lg transition-colors duration-300"
+              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
               variants={fadeIn}
               whileHover={{ y: -5 }}
             >
               <motion.h3
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--primary)]"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                0<span className="text-xl sm:text-2xl md:text-3xl">+</span>
+                0<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
               </motion.h3>
-              <div className="w-8 sm:w-10 md:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base">
+              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
+              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
                 HAPPY
                 <br />
                 CUSTOMERS
@@ -543,20 +541,20 @@ const About = () => {
 
             {/* Awards Won */}
             <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-4 sm:p-6 md:p-8 rounded-lg transition-colors duration-300"
+              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
               variants={fadeIn}
               whileHover={{ y: -5 }}
             >
               <motion.h3
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--primary)]"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                0<span className="text-xl sm:text-2xl md:text-3xl">+</span>
+                0<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
               </motion.h3>
-              <div className="w-8 sm:w-10 md:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base">
+              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
+              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
                 AWARDS
                 <br />
                 WON

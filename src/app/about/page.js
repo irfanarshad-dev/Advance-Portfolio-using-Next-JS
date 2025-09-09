@@ -16,7 +16,7 @@ export default function AboutPage() {
             </div>
             
             {/* Main Content */}
-            <div className="w-full">
+            <div className="w-full pb-20 lg:pb-0">
                 <About />
             </div>
             

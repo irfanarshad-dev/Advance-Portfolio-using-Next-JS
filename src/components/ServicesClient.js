@@ -21,8 +21,13 @@ export default function ServicesClient() {
 
   return (
     <div className="bg-[var(--background)] text-[var(--foreground)] overflow-y-auto overflow-x-hidden py-8 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 relative" style={{ minHeight: '100vh' }}>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }} transition={{ duration: 0.6 }} className="text-center mb-16">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"><span className="text-[var(--primary)]">My</span> Services</h1>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }} transition={{ duration: 0.6 }} className="relative text-center mb-16">
+        <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold text-[var(--nav-text)]/20 absolute top-0 left-0 right-0 text-center sm:pt-3">
+          SERVICES
+        </h1>
+        <h2 className="text-3xl md:text-3xl lg:text-6xl font-extrabold text-center relative z-10 text-[var(--foreground)] pt-2 md:pt-6 lg:pt-8 mb-6">
+          MY <span className="text-[var(--primary)]">SERVICES</span>
+        </h2>
         <p className="text-lg sm:text-xl max-w-3xl mx-auto text-[var(--nav-text)]">Transforming ideas into digital reality with cutting-edge web development solutions</p>
       </motion.div>
 
@@ -124,33 +129,33 @@ export default function ServicesClient() {
         ))}
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }} transition={{ duration: 0.6, delay: 0.8 }} className="max-w-6xl mx-auto mb-16">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">My <span className="text-[var(--primary)]">Process</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }} transition={{ duration: 0.6, delay: 0.8 }} className="max-w-6xl mx-auto mb-16 px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">My <span className="text-[var(--primary)]">Process</span></h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {[
             { step: "01", title: "Discovery", desc: "Understanding your vision and requirements" },
             { step: "02", title: "Design", desc: "Creating wireframes and visual concepts" },
             { step: "03", title: "Development", desc: "Building with modern technologies" },
             { step: "04", title: "Delivery", desc: "Testing, deployment, and support" }
           ].map((item, index) => (
-            <div key={index} className="text-center group">
-              <div className="w-16 h-16 bg-[var(--primary)] text-[var(--nav-text-hover)] rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">{item.step}</div>
-              <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-              <p className="text-[var(--nav-text)]">{item.desc}</p>
+            <div key={index} className="text-center group cursor-pointer">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[var(--primary)] text-[var(--nav-text-hover)] rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 group-hover:scale-110 group-active:scale-105 transition-transform duration-300 touch-manipulation">{item.step}</div>
+              <h3 className="text-sm sm:text-lg md:text-xl font-bold mb-1 sm:mb-2">{item.title}</h3>
+              <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)] leading-tight">{item.desc}</p>
             </div>
           ))}
         </div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }} transition={{ duration: 0.6, delay: 1 }} className="text-center bg-[var(--card-bg)] rounded-2xl p-12 max-w-4xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-6">Ready to Start Your <span className="text-[var(--primary)]">Project</span>?</h2>
-        <p className="text-lg text-[var(--nav-text)] mb-8 max-w-2xl mx-auto">Let's discuss your ideas and create something amazing together. I'm here to bring your vision to life.</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }} transition={{ duration: 0.6, delay: 1 }} className="text-center bg-[var(--card-bg)] rounded-2xl p-6 sm:p-8 md:p-12 max-w-4xl mx-auto mb-20 sm:mb-16 md:mb-12 lg:mb-8">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Ready to Start Your <span className="text-[var(--primary)]">Project</span>?</h2>
+        <p className="text-sm sm:text-base md:text-lg text-[var(--nav-text)] mb-6 sm:mb-8 max-w-2xl mx-auto">Let's discuss your ideas and create something amazing together. I'm here to bring your vision to life.</p>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link href="/contact">
-            <button className="px-8 py-4 bg-[var(--primary)] text-[var(--nav-text-hover)] rounded-full font-semibold hover:bg-[var(--primary-hover)] transition-all duration-300 transform hover:scale-105">Get In Touch</button>
+            <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[var(--primary)] text-[var(--nav-text-hover)] rounded-full font-semibold hover:bg-[var(--primary-hover)] active:bg-[var(--primary-hover)] active:scale-95 transition-all duration-300 transform hover:scale-105 touch-manipulation">Get In Touch</button>
           </Link>
           <Link href="/portfolio">
-            <button className="px-8 py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-full font-semibold hover:bg-[var(--primary)] hover:text-[var(--nav-text-hover)] transition-all duration-300">View Portfolio</button>
+            <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-full font-semibold hover:bg-[var(--primary)] hover:text-[var(--nav-text-hover)] active:bg-[var(--primary)] active:text-[var(--nav-text-hover)] active:scale-95 transition-all duration-300 touch-manipulation">View Portfolio</button>
           </Link>
         </div>
       </motion.div>
