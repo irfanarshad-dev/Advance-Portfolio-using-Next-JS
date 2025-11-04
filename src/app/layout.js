@@ -36,6 +36,7 @@ export default function RootLayout({ children }) {
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
         <ThemeProvider>
           {/* Global Theme Toggle Button */}
@@ -45,6 +46,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}
         </ThemeProvider>
+        
       </body>
     </html>
   );

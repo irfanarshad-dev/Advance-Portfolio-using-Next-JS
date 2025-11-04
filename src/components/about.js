@@ -402,7 +402,7 @@ const About = () => {
                   </Link>
                 </p>
                 <p className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm md:text-base">
-                  <span className="font-bold">Skype:</span> john.doe
+                  {/* <span className="font-bold">Skype:</span> john.doe */}
                 </p>
               </div>
 
@@ -414,7 +414,7 @@ const About = () => {
                   <span className="font-bold">Nationality:</span> Pakistani
                 </p>
                 <p className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm md:text-base">
-                  <span className="font-bold">Address:</span> Raiwind,LHR
+                  <span className="font-bold">Address:</span> Lahore, Pakistan
                 </p>
                 <p className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm md:text-base">
                   <span className="font-bold block sm:inline">Email:</span>{" "}
@@ -441,7 +441,7 @@ const About = () => {
                 </p>
                 <p className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm md:text-base">
                   <span className="font-bold block sm:inline">Languages:</span>{" "}
-                  <span>Punjabi, Urdu, English</span>
+                  <span>Urdu & English</span>
                 </p>
               </div>
             </div>
@@ -472,94 +472,52 @@ const About = () => {
           </motion.div>
 
           {/* Statistics */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-            {/* Years of Experience */}
-            <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
-              variants={fadeIn}
-              whileHover={{ y: -5 }}
-            >
-              <motion.h3
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
+          <div className="flex justify-center">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-md w-full">
+              {/* Years of Experience */}
+              <motion.div
+                className="bg-[var(--card-bg)] bg-card-hover p-2 sm:p-3 md:p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-[var(--border-color)]/20"
+                variants={fadeIn}
+                whileHover={{ y: -8, scale: 1.02 }}
               >
-                02<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
-              </motion.h3>
-              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
-                YEARS OF
-                <br />
-                EXPERIENCE
-              </p>
-            </motion.div>
+                <motion.h3
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--primary)] text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                  02<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
+                </motion.h3>
+                <div className="w-8 sm:w-10 md:w-12 h-1 bg-[var(--primary)] mx-auto my-1 sm:my-2 rounded-full"></div>
+                <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight text-center text-[var(--nav-text)]">
+                  YEARS OF
+                  <br />
+                  EXPERIENCE
+                </p>
+              </motion.div>
 
-            {/* Completed Projects */}
-            <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
-              variants={fadeIn}
-              whileHover={{ y: -5 }}
-            >
-              <motion.h3
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
+              {/* Completed Projects */}
+              <motion.div
+                className="bg-[var(--card-bg)] bg-card-hover p-2 sm:p-3 md:p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-[var(--border-color)]/20"
+                variants={fadeIn}
+                whileHover={{ y: -8, scale: 1.02 }}
               >
-                10<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
-              </motion.h3>
-              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
-                COMPLETED
-                <br />
-                PROJECTS
-              </p>
-            </motion.div>
-
-            {/* Happy Customers */}
-            <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
-              variants={fadeIn}
-              whileHover={{ y: -5 }}
-            >
-              <motion.h3
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-              >
-                0<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
-              </motion.h3>
-              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
-                HAPPY
-                <br />
-                CUSTOMERS
-              </p>
-            </motion.div>
-
-            {/* Awards Won */}
-            <motion.div
-              className="bg-[var(--card-bg)] bg-card-hover p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg transition-colors duration-300"
-              variants={fadeIn}
-              whileHover={{ y: -5 }}
-            >
-              <motion.h3
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--primary)]"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                0<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
-              </motion.h3>
-              <div className="w-6 sm:w-8 md:w-10 lg:w-12 h-1 bg-[var(--border-color)] my-2 sm:my-3 md:my-4"></div>
-              <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight">
-                AWARDS
-                <br />
-                WON
-              </p>
-            </motion.div>
+                <motion.h3
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--primary)] text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  10<span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">+</span>
+                </motion.h3>
+                <div className="w-8 sm:w-10 md:w-12 h-1 bg-[var(--primary)] mx-auto my-1 sm:my-2 rounded-full"></div>
+                <p className="uppercase font-semibold text-xs sm:text-sm md:text-base leading-tight text-center text-[var(--nav-text)]">
+                  COMPLETED
+                  <br />
+                  PROJECTS
+                </p>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
 
