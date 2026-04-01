@@ -18,12 +18,12 @@ const projects = [
   },
   {
     id: 2,
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates and team collaboration features.",
-    image: "/Images/Irfan.png",
-    tags: ["Next.js", "Firebase", "Tailwind CSS"],
-    github: "https://github.com/username/project2",
-    demo: "https://project2-demo.com",
+    title: "E-commerce website clone",
+    description: "A full-stack e-commerce website clone with basic shopping features.",
+    image: "/Images/Arby.png",
+    tags: ["Next.js","Node.js", "Nestjs", "Tailwind CSS", "MongoDB"],
+    github: "#",
+    demo: "https://web-project-frontend-ten.vercel.app/",
   },
   {
     id: 3,

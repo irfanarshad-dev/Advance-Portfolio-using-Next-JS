@@ -144,7 +144,7 @@ export default function ContactClient() {
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <Link href="https://www.linkedin.com/in/c%D4%8B-%CE%B9%C9%BE%CF%9D%CE%B1%C9%B3-a%C9%BE%CA%82%D4%8B%CE%B1%D4%83-78320435b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="bg-[var(--card-bg)] p-1.5 xs:p-2 sm:p-2.5 md:p-3 rounded-full hover:bg-[var(--primary)] active:bg-[var(--primary)] active:scale-95 transition-all duration-300 inline-block touch-manipulation">
+              <Link href="https://www.linkedin.com/in/irfan-arshad-39b716390?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" className="bg-[var(--card-bg)] p-1.5 xs:p-2 sm:p-2.5 md:p-3 rounded-full hover:bg-[var(--primary)] active:bg-[var(--primary)] active:scale-95 transition-all duration-300 inline-block touch-manipulation">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
                 </svg>
