@@ -10,12 +10,13 @@ export default function ClientThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="group flex items-center justify-center bg-[var(--card-bg)] hover:bg-[var(--primary)] p-2 rounded-full transition-colors duration-300"
+      className="group flex items-center justify-center p-2 rounded-full transition-colors duration-300 cursor-pointer"
+      style={{ backgroundColor: 'var(--card-bg-secondary)' }}
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
       {theme === 'dark' ? 
-        <LightModeIcon className="text-[var(--foreground)]" /> : 
-        <DarkModeIcon className="text-[var(--foreground)]" />
+        <LightModeIcon className="text-[var(--foreground)] group-hover:text-[var(--primary)]" /> : 
+        <DarkModeIcon className="text-[var(--foreground)] group-hover:text-[var(--primary)]" />
       }
     </button>
   );

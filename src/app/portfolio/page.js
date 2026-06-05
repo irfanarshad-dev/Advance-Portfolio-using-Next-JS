@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
+import { categories, projects, tagColors } from "@/lib/portfolioData";
 
 const PortfolioClient = dynamic(() => import("@/components/PortfolioClient"));
-const Navbar = dynamic(() => import("@/components/navbar"));
 
 export const metadata = {
   title: 'Portfolio'
@@ -10,20 +10,11 @@ export const metadata = {
 export default function PortfolioPage() {
   return (
     <div className="min-h-screen flex flex-col text-[var(--foreground)] overflow-x-hidden bg-[var(--background)]">
-      {/* Desktop Navbar */}
-      <div className="hidden lg:block fixed top-0 left-0 h-full w-24 z-50">
-        <Navbar />
-      </div>
-      
-      {/* Main Content */}
-      <div className="w-full">
-        <PortfolioClient />
-      </div>
-      
-      {/* Mobile Navbar */}
-      <div className="lg:hidden fixed bottom-0 left-0 w-full z-50">
-        <Navbar />
-      </div>
+      <PortfolioClient
+        categories={categories}
+        projects={projects}
+        tagColors={tagColors}
+      />
     </div>
   );
 }

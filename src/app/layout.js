@@ -1,9 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ClientThemeToggle from "@/components/ClientThemeToggle";
-import { iconButtonClasses } from "@mui/material";
+import PageTransition from "@/components/PageTransition";
+import Navbar from "@/components/NavbarClient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,11 +14,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-//
+
 export const metadata = {
   title: {
-    default: "My Self Irfan",   // fallback title
-    template: "%s - My Self Irfan", // used by pages
+    default: "My Self Irfan",
+    template: "%s - My Self Irfan",
   },
   description: "Welcome to my portfolio website",
   icons: {
@@ -35,19 +35,20 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-y-scroll custom-scrollbar`}
         suppressHydrationWarning={true}
       >
         <ThemeProvider>
-          {/* Global Theme Toggle Button */}
           <div className="fixed top-4 right-4 z-50">
             <ClientThemeToggle />
           </div>
+          {/* Global sticky Navbar — desktop: right side centered, mobile: bottom bar */}
           <Navbar />
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </ThemeProvider>
-        
       </body>
     </html>
   );
-};
+}
