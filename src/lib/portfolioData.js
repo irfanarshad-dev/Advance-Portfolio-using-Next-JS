@@ -36,7 +36,7 @@ export const projects = [
     id: 4,
     title: "Weather Dashboard",
     description: "A weather dashboard that displays current and forecasted weather data for multiple locations.",
-    image: "/Images/Irfan.png",
+    image: "/Images/wether_dashboard.webp",
     tags: ["React", "OpenWeather API", "Chart.js"],
     github: "https://github.com/username/project4",
     demo: "https://project4-demo.com",

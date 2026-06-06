@@ -1,172 +1,411 @@
 "use client";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LaunchIcon from "@mui/icons-material/Launch";
-import ScrollReveal, { StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 
+// ─── Scroll reveal helper ────────────────────────────────────────────────────
+const Reveal = ({ children, delay = 0, y = 28, className = "" }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// ─── Category accent colors ──────────────────────────────────────────────────
+const CATEGORY_ACCENTS = {
+  "Voice":               { dot: "#8B5CF6", label: "bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300" },
+  "E-Commerce":          { dot: "#F59E0B", label: "bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300" },
+  "Final Yeatr Project": { dot: "#10B981", label: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300" },
+  "Dashboard":           { dot: "#3B82F6", label: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300" },
+  "default":             { dot: "#6B7280", label: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400" },
+};
+
+// ─── Project Card ────────────────────────────────────────────────────────────
+const ProjectCard = ({ project, tagColors, index }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-30px" });
+  const accent = CATEGORY_ACCENTS[project.category] || CATEGORY_ACCENTS.default;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 36, scale: 0.97 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.58, delay: (index % 3) * 0.09, ease: [0.22, 1, 0.36, 1] }}
+      layout
+      className="group relative flex flex-col h-full"
+      style={{
+        borderRadius: 10,
+        background: "var(--card-bg, var(--background))",
+        border: "1px solid var(--border-color, rgba(0,0,0,0.08))",
+        overflow: "hidden",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)",
+        transition: "box-shadow 0.3s ease, transform 0.3s ease",
+      }}
+      whileHover={{ y: -7, boxShadow: "0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.06)" }}
+    >
+      {/* ── Colored top accent bar ── */}
+      <div
+        style={{
+          height: 3,
+          background: accent.dot,
+          width: "100%",
+          flexShrink: 0,
+        }}
+      />
+
+      {/* ── Image with hover overlay ── */}
+      <div className="relative overflow-hidden" style={{ height: 200, flexShrink: 0, background: "var(--card-bg-secondary, #f5f5f5)" }}>
+        <motion.div
+          className="w-full h-full relative"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover"
+            style={{ objectPosition: "top center" }}
+          />
+        </motion.div>
+
+        {/* gradient overlay */}
+        <div
+          className="absolute inset-0 transition-opacity duration-400"
+          style={{
+            background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)",
+            opacity: 0,
+          }}
+          // CSS class handles opacity — we use group-hover via tailwind below
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-350" />
+
+        {/* Number badge — top-left */}
+        <div
+          className="absolute top-3 left-3 z-10"
+          style={{
+            background: "rgba(0,0,0,0.55)",
+            backdropFilter: "blur(6px)",
+            color: "#fff",
+            fontSize: 11,
+            fontWeight: 700,
+            fontFamily: "monospace",
+            letterSpacing: "0.08em",
+            padding: "3px 9px",
+            borderRadius: 20,
+          }}
+        >
+          {project.number}
+        </div>
+
+        {/* Live badge — top-right */}
+        <div
+          className="absolute top-10 right-3 z-10 flex items-center gap-1.5"
+          style={{
+            background: "rgba(16,185,129,0.18)",
+            backdropFilter: "blur(6px)",
+            border: "1px solid rgba(16,185,129,0.45)",
+            color: "#10B981",
+            fontSize: 10,
+            fontWeight: 700,
+            padding: "3px 9px",
+            borderRadius: 20,
+          }}
+        >
+          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#10B981", animation: "pulse 2s infinite", display: "inline-block" }} />
+          Live
+        </div>
+
+        {/* Action buttons — appear on hover, centered */}
+        <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+          <Link href={project.github} target="_blank" rel="noopener noreferrer">
+            <motion.div
+              whileHover={{ scale: 1.12 }}
+              whileTap={{ scale: 0.92 }}
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.3)",
+                borderRadius: "50%",
+                padding: 10,
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+            >
+              <GitHubIcon style={{ fontSize: 20 }} />
+            </motion.div>
+          </Link>
+          <Link href={project.demo} target="_blank" rel="noopener noreferrer">
+            <motion.div
+              whileHover={{ scale: 1.12 }}
+              whileTap={{ scale: 0.92 }}
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.3)",
+                borderRadius: "50%",
+                padding: 10,
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+            >
+              <LaunchIcon style={{ fontSize: 20 }} />
+            </motion.div>
+          </Link>
+        </div>
+      </div>
+
+      {/* ── Card body ── */}
+      <div className="flex flex-col flex-grow" style={{ padding: "16px 18px 14px" }}>
+
+        {/* Category chip */}
+        <div className="flex items-center gap-2 mb-2">
+          <span
+            className={`inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${accent.label}`}
+          >
+            <span style={{ width: 5, height: 5, borderRadius: "50%", background: accent.dot, flexShrink: 0 }} />
+            {project.category}
+          </span>
+        </div>
+
+        {/* Title */}
+        <h3
+          className="font-extrabold leading-snug mb-1.5 group-hover:text-[var(--primary)] transition-colors duration-250"
+          style={{ fontSize: 15, color: "var(--foreground)", letterSpacing: "-0.01em" }}
+        >
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p
+          className="text-xs leading-relaxed mb-3 line-clamp-2"
+          style={{ color: "var(--nav-text)", fontWeight: 400 }}
+        >
+          {project.description}
+        </p>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1 mb-3">
+          {project.tags.slice(0, 4).map((tag) => (
+            <span
+              key={tag}
+              className={`text-[10px] px-2 py-0.5 rounded-md border font-medium ${
+                tagColors[tag] || "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700"
+              }`}
+            >
+              {tag}
+            </span>
+          ))}
+          {project.tags.length > 4 && (
+            <span
+              className="text-[10px] px-2 py-0.5 rounded-md border font-medium"
+              style={{
+                background: "var(--card-bg-secondary)",
+                color: "var(--nav-text)",
+                borderColor: "var(--border-color)",
+              }}
+            >
+              +{project.tags.length - 4} more
+            </span>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div
+          className="mt-auto flex items-center justify-between pt-3"
+          style={{ borderTop: "1px solid var(--border-color, rgba(0,0,0,0.07))" }}
+        >
+          {/* GitHub micro-link */}
+          <Link
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-[11px] font-medium transition-opacity duration-200 opacity-50 hover:opacity-100"
+            style={{ color: "var(--foreground)" }}
+          >
+            <GitHubIcon style={{ fontSize: 14 }} />
+            Source
+          </Link>
+
+          {/* View project */}
+          <Link
+            href={project.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-[11px] font-semibold transition-all duration-200 hover:gap-2"
+            style={{ color: accent.dot }}
+          >
+            View Project
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// ─── Main Component ──────────────────────────────────────────────────────────
 export default function PortfolioClient({
   projects = [],
   tagColors = {},
-  categories = []
+  categories = [],
 }) {
-  const [isVisible, setIsVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [filteredProjects, setFilteredProjects] = useState(projects);
 
-  useEffect(() => {
-    setIsVisible(true);
-    if (selectedCategory === "All") {
-      setFilteredProjects(projects);
-    } else {
-      const filtered = projects.filter(project => project.tags.includes(selectedCategory));
-      setFilteredProjects(filtered);
-    }
-  }, [selectedCategory]);
+  const filteredProjects =
+    selectedCategory === "All"
+      ? projects
+      : projects.filter((p) => p.tags.includes(selectedCategory));
 
   return (
-    <div className="bg-[var(--background)] text-[var(--foreground)] overflow-y-auto overflow-x-hidden py-22 sm:py-8 md:py-10 lg:py-12 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 relative custom-scrollbar" style={{ minHeight: '100vh', height: '100%', scrollbarWidth: 'thin', scrollbarColor: 'var(--nav-text) var(--background)' }}>
-      <ScrollReveal variant="flipUp" className="relative text-center mb-10">
-        <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold text-[var(--nav-text)]/20 absolute top-0 left-0 right-0 text-center sm:pt-3">
+    <div className="bg-[var(--background)] text-[var(--foreground)] py-16 sm:py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+
+      {/* ── Header ── */}
+      <Reveal className="relative text-center mb-10">
+        <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold text-[var(--nav-text)]/20 absolute top-0 left-0 right-0 text-center sm:pt-3 select-none pointer-events-none">
           WORKS
         </h1>
-        <h2 className="text-3xl md:text-3xl lg:text-6xl font-extrabold text-center relative z-10 text-[var(--foreground)] pt-2 md:pt-6 lg:pt-8 mb-4">
+        <h2 className="text-3xl md:text-4xl lg:text-6xl font-extrabold text-center relative z-10 text-[var(--foreground)] pt-2 md:pt-6 lg:pt-8 mb-3">
           MY <span className="text-[var(--primary)]">PORTFOLIO</span>
         </h2>
-        <p className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto">Explore my recent projects showcasing my skills and expertise in web development. Each project represents a unique challenge and solution.</p>
-      </ScrollReveal>
+        <p className="text-sm sm:text-base text-[var(--nav-text)] max-w-xl mx-auto leading-relaxed">
+          Explore my recent projects showcasing my skills and expertise in web development.
+          Each project represents a unique challenge and solution.
+        </p>
+      </Reveal>
 
-      <ScrollReveal variant="fadeUp" delay={0.15} className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
-        {categories.map((category, index) => (
-          <motion.button
-            key={index}
-            onClick={() => setSelectedCategory(category)}
-            whileHover={{ scale: 1.08, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className={`relative px-4 py-2 rounded-full text-sm sm:text-base transition-all duration-300 active:scale-95 touch-manipulation cursor-pointer ${selectedCategory === category ? 'text-[var(--nav-text-hover)]' : 'hover:bg-[var(--primary-hover)] hover:text-[var(--nav-text-hover)] active:bg-[var(--primary)] active:text-[var(--nav-text-hover)]'}`}
-            style={{ backgroundColor: selectedCategory === category ? 'var(--primary)' : 'var(--card-bg-secondary)' }}
+      {/* ── Filter Pills ── */}
+      <Reveal delay={0.1} className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+        {categories.map((cat) => {
+          const active = selectedCategory === cat;
+          return (
+            <motion.button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative px-4 py-1.5 rounded-full text-sm font-semibold cursor-pointer transition-colors duration-200"
+              style={{
+                backgroundColor: active ? "var(--primary)" : "var(--card-bg-secondary, rgba(0,0,0,0.05))",
+                color: active ? "var(--nav-text-hover, #fff)" : "var(--foreground)",
+                border: active ? "none" : "1px solid var(--border-color, rgba(0,0,0,0.1))",
+              }}
+            >
+              {active && (
+                <motion.div
+                  layoutId="filter-active-bg"
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: "var(--primary)" }}
+                  transition={{ type: "spring", stiffness: 360, damping: 28 }}
+                />
+              )}
+              <span className="relative z-10">{cat}</span>
+            </motion.button>
+          );
+        })}
+      </Reveal>
+
+      {/* ── Project count ── */}
+      <Reveal delay={0.15} className="text-center mb-6">
+        <span
+          className="text-xs font-mono uppercase tracking-widest"
+          style={{ color: "var(--nav-text)" }}
+        >
+          {filteredProjects.length} project{filteredProjects.length !== 1 ? "s" : ""}
+          {selectedCategory !== "All" ? ` in ${selectedCategory}` : " total"}
+        </span>
+      </Reveal>
+
+      {/* ── Grid ── */}
+      <div className="max-w-7xl mx-auto mb-20">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedCategory}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.28, ease: "easeInOut" }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
           >
-            {selectedCategory === category && (
-              <motion.div layoutId="filter-pill" className="absolute inset-0 bg-[var(--primary)] rounded-full" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />
-            )}
-            <span className="relative z-10">{category}</span>
-          </motion.button>
-        ))}
-      </ScrollReveal>
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                tagColors={tagColors}
+                index={index}
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
-      <div className="max-w-7xl mx-auto mb-20 sm:mb-16 lg:mb-12">
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6" staggerDelay={0.08}>
-          {filteredProjects.map((project, index) => (
-            <StaggerItem key={`${project.id}-${selectedCategory}`} variant="flipUp">
-              <motion.div 
-                className="rounded-xl overflow-hidden shadow-md border transition-all duration-500 group cursor-pointer flex flex-col h-full"
-                style={{ 
-                  backgroundColor: 'var(--card-bg)', 
-                  borderColor: 'var(--border-color)',
-                  perspective: "1000px",
-                }}
-                whileHover={{ y: -8, scale: 1.02, boxShadow: "0 20px 40px rgba(0,0,0,0.15)" }}
-              >
-                {/* Image Container */}
-                <div className="relative h-44 sm:h-48 overflow-hidden">
-                  <motion.div
-                    whileHover={{ scale: 1.08 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full h-full relative"
-                  >
-                    <Image 
-                      src={project.image} 
-                      alt={project.title} 
-                      fill 
-                      className="object-cover" 
-                      style={{ transform: 'scale(0.9)' }}
-                    />
-                  </motion.div>
-                  
-                  {/* Gradient Overlay on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                  
-                  {/* Action Buttons - Centered on hover */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-3 sm:gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                    <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                      <motion.div 
-                        whileHover={{ scale: 1.15 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="backdrop-blur-md bg-white/10 border border-white/30 p-2.5 sm:p-3 rounded-full hover:bg-white/20 transition-all duration-300 shadow-lg touch-manipulation"
-                      >
-                        <GitHubIcon className="text-white text-lg sm:text-xl" />
-                      </motion.div>
-                    </Link>
-                    <Link href={project.demo} target="_blank" rel="noopener noreferrer">
-                      <motion.div 
-                        whileHover={{ scale: 1.15 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="backdrop-blur-md bg-white/10 border border-white/30 p-2.5 sm:p-3 rounded-full hover:bg-white/20 transition-all duration-300 shadow-lg touch-manipulation"
-                      >
-                        <LaunchIcon className="text-white text-lg sm:text-xl" />
-                      </motion.div>
-                    </Link>
-                  </div>
-                </div>
-                
-                {/* Text Content Below Image */}
-                <div className="p-3 sm:p-3.5 flex-grow flex flex-col">
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="text-[10px] sm:text-xs font-mono uppercase tracking-wider text-amber-500 dark:text-amber-400">
-                      {project.number} — {project.category}
-                    </div>
-                    <div className="bg-green-500 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-semibold shadow-lg flex items-center gap-1">
-                      <span className="w-1 h-1 bg-white rounded-full animate-pulse"></span>
-                      Live
-                    </div>
-                  </div>
-                  
-                  <h3 className="text-sm sm:text-base font-bold mb-1 group-hover:text-[var(--primary)] transition-colors duration-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 800, color: 'var(--foreground)' }}>
-                    {project.title}
-                  </h3>
-                  
-                  <p className="text-[11px] sm:text-xs mb-2 line-clamp-2" style={{ fontWeight: 300, color: 'var(--nav-text)' }}>
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-1 mb-2">
-                    {project.tags.map((tag, tagIndex) => (
-                      <span 
-                        key={tagIndex} 
-                        className={`text-[10px] sm:text-xs px-1.5 py-0.5 rounded-md border transition-all duration-300 cursor-default ${tagColors[tag] || 'bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'}`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="mt-auto pt-2 border-t flex items-center justify-end" style={{ borderColor: 'var(--border-color)' }}>
-                    <Link href={project.demo} target="_blank" rel="noopener noreferrer" className="group/link inline-flex items-center gap-1 text-[10px] sm:text-xs text-amber-500 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 hover:gap-2 transition-all duration-300 font-medium">
-                      <span>View Project</span>
-                      <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        {filteredProjects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center py-24 gap-3"
+          >
+            <span className="text-4xl opacity-20">⬡</span>
+            <p className="text-sm" style={{ color: "var(--nav-text)" }}>
+              No projects found for &ldquo;{selectedCategory}&rdquo;
+            </p>
+          </motion.div>
+        )}
       </div>
 
-      <ScrollReveal variant="fadeUp" delay={0.3} className="mt-16 text-center rounded-xl p-6 sm:p-8 max-w-3xl mx-auto" style={{ backgroundColor: 'var(--card-bg-secondary)' }}>
-        <h2 className="text-xl sm:text-2xl font-bold mb-4">Interested in working together?</h2>
-        <p className="mb-6 text-sm sm:text-base">I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
-        <Link href="/contact">
-          <button className="group relative inline-flex items-center px-6 sm:px-8 py-3 rounded-full border border-[var(--primary)] overflow-hidden transition-all duration-300 text-[var(--foreground)] hover:text-[var(--nav-text-hover)] active:text-[var(--nav-text-hover)] font-bold text-sm active:scale-95 touch-manipulation cursor-pointer">
-            <span className="relative z-10">Get In Touch</span>
-            <span className="absolute inset-0 bg-[var(--primary)] translate-x-full group-hover:translate-x-0 group-active:translate-x-0 transition-transform duration-300 ease-out z-0" aria-hidden="true"></span>
-          </button>
-        </Link>
-      </ScrollReveal>
+      {/* ── CTA ── */}
+      <Reveal delay={0.1}>
+        <div
+          className="text-center rounded-2xl p-8 sm:p-10 max-w-2xl mx-auto"
+          style={{
+            background: "var(--card-bg-secondary, rgba(0,0,0,0.03))",
+            border: "1px solid var(--border-color, rgba(0,0,0,0.07))",
+          }}
+        >
+          <h2 className="text-xl sm:text-2xl font-bold mb-3">Interested in working together?</h2>
+          <p className="mb-6 text-sm sm:text-base" style={{ color: "var(--nav-text)" }}>
+            I&apos;m always open to discussing new projects, creative ideas or opportunities to be part of your vision.
+          </p>
+          <Link href="/contact">
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="group relative inline-flex items-center px-7 py-2.5 rounded-full border border-[var(--primary)] overflow-hidden font-bold text-sm text-[var(--foreground)] hover:text-[var(--nav-text-hover)] cursor-pointer"
+              style={{ background: "var(--background)" }}
+            >
+              <span className="relative z-10 transition-colors duration-300">Get In Touch</span>
+              <span className="absolute inset-0 bg-[var(--primary)] translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0" />
+            </motion.button>
+          </Link>
+        </div>
+      </Reveal>
+
+      <style jsx global>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.4; }
+        }
+      `}</style>
     </div>
   );
 }
