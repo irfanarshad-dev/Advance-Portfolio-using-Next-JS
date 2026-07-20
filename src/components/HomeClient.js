@@ -122,12 +122,12 @@ export default function HomeClient({ skills = [] }) {
 
         {/* Profile Image */}
         <div
-          className={`relative mx-auto rounded-full lg:rounded-[30px] w-32 h-32 xs:w-36 xs:h-36 sm:w-48 sm:h-48 md:w-[280px] md:h-[280px] lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[650px] overflow-hidden shadow-lg mt-6 sm:mt-8 md:mt-6 lg:mt-0 ${
+          className={`relative mx-auto rounded-full lg:rounded-[30px] w-32 h-32 xs:w-36 xs:h-36 sm:w-48 sm:h-48 md:w-[280px] md:h-[280px] lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[514px] overflow-hidden shadow-lg mt-6 sm:mt-8 md:mt-6 lg:mt-0 ${
             isVisible ? "profile-image-animate" : "opacity-0"
           }`}
           style={{
-            backgroundImage: "url('/Images/Irfan.png')",
-            backgroundSize: "cover",
+            backgroundImage: "url('/Images/Irfan-Pic.png')",
+            backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "top center",
             boxShadow: "0 0 10px rgba(0, 0, 0, .9)",
@@ -138,7 +138,7 @@ export default function HomeClient({ skills = [] }) {
             src="/Images/Irfan-Pic.png"
             alt="Profile background"
             fill
-            className="object-cover w-full h-full"
+            className="object-contain w-full h-full"
             style={{ borderRadius: "inherit" }}
             priority
           />
