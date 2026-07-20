@@ -126,19 +126,23 @@ export default function HomeClient({ skills = [] }) {
             isVisible ? "profile-image-animate" : "opacity-0"
           }`}
           style={{
-            backgroundImage: "url('/Images/Irfan-Pic.png')",
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "top center",
             boxShadow: "0 0 10px rgba(0, 0, 0, .9)",
             zIndex: 11,
           }}
         >
           <Image
             src="/Images/Irfan-Pic.png"
+            alt="Profile"
+            fill
+            className="object-cover object-top lg:hidden"
+            style={{ borderRadius: "inherit" }}
+            priority
+          />
+          <Image
+            src="/Images/Irfan-Pic.png"
             alt="Profile background"
             fill
-            className="object-contain w-full h-full"
+            className="object-contain w-full h-full hidden lg:block"
             style={{ borderRadius: "inherit" }}
             priority
           />

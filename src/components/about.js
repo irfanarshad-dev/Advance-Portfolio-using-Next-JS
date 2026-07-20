@@ -365,8 +365,8 @@ const About = () => {
               </h2>
               {/* mobile profile pic */}
               <motion.div
-                className="sm:hidden mx-auto mt-6 rounded-2xl border-2 border-[var(--primary)] shadow-md"
-                style={{ width: 160, overflow: "hidden" }}
+                className="sm:hidden mx-auto mt-6 rounded-full border-2 border-[var(--primary)] shadow-md"
+                style={{ width: 140, height: 140, position: "relative", overflow: "hidden" }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
@@ -378,9 +378,8 @@ const About = () => {
                 <Image
                   src="/Images/Irfan-Pic.png"
                   alt="Profile"
-                  width={160}
-                  height={213}
-                  className="w-full h-auto"
+                  fill
+                  className="object-cover object-top"
                   priority
                 />
               </motion.div>
