@@ -18,6 +18,8 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname();
 
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <>
       <nav className="hidden lg:flex fixed top-1/2 right-8 -translate-y-1/2 flex-col space-y-6 z-50">

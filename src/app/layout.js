@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
-import ClientThemeToggle from "@/components/ClientThemeToggle";
+import ThemeToggleWrapper from "@/components/ThemeToggleWrapper";
 import PageTransition from "@/components/PageTransition";
 import Navbar from "@/components/NavbarClient";
 
@@ -39,9 +39,7 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning={true}
       >
         <ThemeProvider>
-          <div className="fixed top-4 right-4 z-50">
-            <ClientThemeToggle />
-          </div>
+          <ThemeToggleWrapper />
           {/* Global sticky Navbar — desktop: right side centered, mobile: bottom bar */}
           <Navbar />
           <PageTransition>
