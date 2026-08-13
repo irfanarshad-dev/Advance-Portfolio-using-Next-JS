@@ -2,6 +2,19 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ScrollReveal, { StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
+import { TbWorldWww, TbStack2, TbLayoutDashboard, TbDeviceMobile, TbBrandWordpress, TbBolt } from "react-icons/tb";
+
+// Icons are mapped here (client-side) because functions/components can't be
+// passed as props from a Server Component — ServicesServer.js only sends
+// plain string identifiers, and we resolve them to real components here.
+const ICONS = {
+  web: TbWorldWww,
+  stack: TbStack2,
+  layout: TbLayoutDashboard,
+  mobile: TbDeviceMobile,
+  wordpress: TbBrandWordpress,
+  bolt: TbBolt,
+};
 
 export default function ServicesAnimations({ services, processSteps }) {
   return (
@@ -27,7 +40,9 @@ export default function ServicesAnimations({ services, processSteps }) {
         staggerDelay={0.1}
         className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 mb-16 px-2 sm:px-0"
       >
-        {services.map((service) => (
+        {services.map((service) => {
+          const Icon = ICONS[service.icon];
+          return (
           <StaggerItem key={service.id} variant="scaleIn">
             <motion.div
               whileHover={{ y: -8, scale: 1.02 }}
@@ -44,11 +59,11 @@ export default function ServicesAnimations({ services, processSteps }) {
 
               <div className="relative z-10">
                 <motion.div
-                  className="text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-5 md:mb-6"
-                  whileHover={{ scale: 1.15, rotate: 5 }}
+                  className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 sm:mb-5 md:mb-6 shadow-lg`}
+                  whileHover={{ scale: 1.1, rotate: 4 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  {service.icon}
+                  <Icon className="text-white" size={28} />
                 </motion.div>
 
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 group-hover:text-[var(--primary)] transition-colors duration-300">
@@ -80,7 +95,8 @@ export default function ServicesAnimations({ services, processSteps }) {
               <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[var(--primary)] rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
             </motion.div>
           </StaggerItem>
-        ))}
+          );
+        })}
       </StaggerContainer>
 
       {/* ── Process ── */}

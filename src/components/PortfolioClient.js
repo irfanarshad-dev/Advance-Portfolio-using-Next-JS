@@ -60,7 +60,7 @@ const ProjectCard = ({ project, tagColors, index }) => {
       <div
         style={{
           height: 3,
-          background: accent.dot,
+          background: `linear-gradient(90deg, ${accent.dot}, ${accent.dot}00)`,
           width: "100%",
           flexShrink: 0,
         }}
