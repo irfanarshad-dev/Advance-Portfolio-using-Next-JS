@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import About from "@/components/about";
 
@@ -13,11 +13,13 @@ function useTypingAnimation(strings, typeSpeed = 60, backSpeed = 40, pauseTime =
   useEffect(() => {
     const currentString = strings[currentIndex];
 
+    const isPausing = !isDeleting && displayText === currentString;
+    const delay = isPausing ? pauseTime : isDeleting ? backSpeed : typeSpeed;
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         setDisplayText(currentString.slice(0, displayText.length + 1));
         if (displayText.length + 1 === currentString.length) {
-          setTimeout(() => setIsDeleting(true), pauseTime);
+          setIsDeleting(true);
         }
       } else {
         setDisplayText(currentString.slice(0, displayText.length - 1));
@@ -26,7 +28,7 @@ function useTypingAnimation(strings, typeSpeed = 60, backSpeed = 40, pauseTime =
           setCurrentIndex((prev) => (prev + 1) % strings.length);
         }
       }
-    }, isDeleting ? backSpeed : typeSpeed);
+    }, delay);
 
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, currentIndex, strings, typeSpeed, backSpeed, pauseTime]);
@@ -38,14 +40,14 @@ export default function HomeClient({ skills = [] }) {
   const [isVisible, setIsVisible] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
 
-  const typingStrings = [
+  const typingStrings = useMemo(() => [
     "Next.js Developer",
     "NestJS Engineer",
     "Full Stack Developer",
     "React Specialist",
     "Backend Architect",
     "Software Engineer",
-  ];
+  ], []);
 
   const typedText = useTypingAnimation(typingStrings, 65, 35, 1600);
 
@@ -54,19 +56,16 @@ export default function HomeClient({ skills = [] }) {
   }, []);
 
   const toggleAboutModal = () => {
-    setShowAboutModal(!showAboutModal);
-    if (!showAboutModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "scroll";
-      document.body.style.overflowY = "scroll";
-    }
+    setShowAboutModal((prev) => {
+      const next = !prev;
+      document.body.style.overflow = next ? "hidden" : "";
+      return next;
+    });
   };
 
   useEffect(() => {
     return () => {
-      document.body.style.overflow = "scroll";
-      document.body.style.overflowY = "scroll";
+      document.body.style.overflow = "";
     };
   }, []);
 

@@ -23,8 +23,8 @@ export default function ServicesAnimations({ services, processSteps }) {
       style={{ minHeight: "100vh" }}
     >
       {/* ── Hero Heading ── */}
-      <ScrollReveal variant="flipUp" delay={0.1} className="relative text-center mb-16">
-        <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold text-[var(--nav-text)]/20 absolute top-0 left-0 right-0 text-center sm:pt-3">
+      <ScrollReveal variant="flipUp" delay={0.1} className="relative text-center mb-16 min-h-[80px] md:min-h-[100px] lg:min-h-[120px]">
+        <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold text-[var(--nav-text)]/20 absolute top-0 left-0 right-0 text-center sm:pt-3 pointer-events-none select-none">
           SERVICES
         </h1>
         <h2 className="text-3xl md:text-3xl lg:text-6xl font-extrabold text-center relative z-10 text-[var(--foreground)] pt-2 md:pt-6 lg:pt-8 mb-6">
@@ -136,24 +136,22 @@ export default function ServicesAnimations({ services, processSteps }) {
           Let's discuss your ideas and create something amazing together. I'm here to bring your vision to life.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-          <Link href="/contact">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[var(--primary)] text-[var(--nav-text-hover)] rounded-full font-semibold hover:bg-[var(--primary-hover)] hover:shadow-lg hover:shadow-[var(--primary)]/50 transition-all duration-300 touch-manipulation"
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/contact"
+              className="block w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[var(--primary)] text-[var(--nav-text-hover)] rounded-full font-semibold hover:bg-[var(--primary-hover)] hover:shadow-lg hover:shadow-[var(--primary)]/50 transition-all duration-300 touch-manipulation text-center"
             >
               Get In Touch
-            </motion.button>
-          </Link>
-          <Link href="/portfolio">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-full font-semibold hover:bg-[var(--primary)] hover:text-[var(--nav-text-hover)] hover:shadow-lg hover:shadow-[var(--primary)]/50 transition-all duration-300 touch-manipulation"
+            </Link>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/portfolio"
+              className="block w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-full font-semibold hover:bg-[var(--primary)] hover:text-[var(--nav-text-hover)] hover:shadow-lg hover:shadow-[var(--primary)]/50 transition-all duration-300 touch-manipulation text-center"
             >
               View Portfolio
-            </motion.button>
-          </Link>
+            </Link>
+          </motion.div>
         </div>
       </ScrollReveal>
     </div>
