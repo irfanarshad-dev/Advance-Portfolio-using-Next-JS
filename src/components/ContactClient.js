@@ -139,7 +139,7 @@ export default function ContactClient() {
                   className="bg-[var(--primary)] p-2 xs:p-2.5 sm:p-3 md:p-3.5 lg:p-4 rounded-full flex-shrink-0 inline-flex items-center justify-center"
                 >
                   <Link
-                    href="mailto:chirfanarshad1@gmail.com"
+                    href="mailto:dev.irfan077@gmail.com"
                     className="cursor-pointer inline-flex items-center justify-center"
                   >
                     <svg
@@ -160,10 +160,10 @@ export default function ContactClient() {
                   </h3>
                   <p className="text-xs sm:text-sm md:text-base text-[var(--nav-text)]">
                     <Link
-                      href="mailto:chirfanarshad1@gmail.com"
+                      href="mailto:dev.irfan077@gmail.com"
                       className="hover:text-[var(--primary)] transition-colors duration-300"
                     >
-                      chirfanarshad1@gmail.com
+                      dev.irfan077@gmail.com
                     </Link>
                   </p>
                 </div>

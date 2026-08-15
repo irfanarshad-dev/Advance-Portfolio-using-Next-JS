@@ -26,15 +26,18 @@ const pageVariants = {
 export default function PageTransition({ children }) {
   const pathname = usePathname();
 
-  // NOTE: mode="wait" was removed intentionally. It makes AnimatePresence
-  // block mounting the new page until the outgoing page's exit animation
-  // fully resolves — and that resolution can get stuck (a known Framer
-  // Motion + Next.js App Router interaction), leaving the screen blank
-  // until a hard refresh. Without mode="wait", the new page mounts
-  // immediately while the old one fades out independently — a safer
-  // tradeoff than a page that can silently break.
+  // mode="popLayout" removes the exiting page from normal document flow
+  // (position: absolute) the instant a new page starts entering. This avoids
+  // two failure modes we hit with the alternatives:
+  //  - mode="wait": blocks the new page from mounting until the old page's
+  //    exit fully resolves, which can get stuck and leave a permanent blank
+  //    screen (the bug we fixed earlier).
+  //  - no mode at all: both pages sit in normal flow simultaneously while
+  //    the old one fades out, so its full height still pushes the new
+  //    page's content down — a big blank gap where the invisible old page
+  //    used to be (the bug reported just now).
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={pathname}
         variants={pageVariants}

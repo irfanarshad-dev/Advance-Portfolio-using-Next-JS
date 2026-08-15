@@ -412,7 +412,7 @@ export default function PortfolioClient({
 
       {/* ── Grid ── */}
       <div className="max-w-7xl mx-auto mb-20">
-        <AnimatePresence initial={false}>
+        <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={selectedCategory}
             initial={{ opacity: 0, y: 8 }}

@@ -444,11 +444,11 @@ const About = () => {
                             Email:
                           </span>{" "}
                           <Link
-                            href="mailto:chirfanarshad1@gmail.com"
+                            href="mailto:dev.irfan077@gmail.com"
                             className="text-[var(--primary)] hover:underline inline-flex items-center group"
                           >
                             <span className="truncate">
-                              chirfanarshad1@gmail.com
+                              dev.irfan077@gmail.com
                             </span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
