@@ -17,17 +17,16 @@ const getWhatsAppLink = (projectTitle) => {
 };
 
 // ─── Scroll reveal helper ────────────────────────────────────────────────────
-const Reveal = ({ children, delay = 0, y = 20, className = "" }) => {
+const Reveal = ({ children, delay = 0, y = 28, className = "" }) => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-30px" });
+  const inView = useInView(ref, { once: true, margin: "-50px" });
   return (
     <motion.div
       ref={ref}
       className={className}
       initial={{ opacity: 0, y }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      style={{ willChange: "transform" }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -52,9 +51,9 @@ const ProjectCard = ({ project, tagColors, index, onOpen }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.45, delay: (index % 3) * 0.07, ease: "easeOut" }}
       onClick={() => onOpen(project)}
       className="group relative flex flex-col h-full cursor-pointer"
       style={{
@@ -63,9 +62,8 @@ const ProjectCard = ({ project, tagColors, index, onOpen }) => {
         border: "1px solid var(--border-color, rgba(0,0,0,0.08))",
         overflow: "hidden",
         transition: "border-color 0.2s ease",
-        willChange: "transform",
       }}
-      whileHover={{ y: -4, transition: { type: "spring", stiffness: 300, damping: 22 } }}
+      whileHover={{ y: -3 }}
     >
       {/* ── Image ── */}
       <div className="relative overflow-hidden" style={{ height: 168, flexShrink: 0, background: "var(--card-bg-secondary, #f5f5f5)" }}>
@@ -371,47 +369,34 @@ export default function PortfolioClient({
       </Reveal>
 
       {/* ── Filter Pills ── */}
-      <Reveal delay={0.1} className="mb-10">
-        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 py-1">
-          {categories.map((cat) => {
-            const active = selectedCategory === cat;
-            const count =
-              cat === "All" ? projects.length : projects.filter((p) => p.tags.includes(cat)).length;
-            return (
-              <motion.button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                className="relative flex-shrink-0 flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full text-[11px] sm:text-sm font-semibold cursor-pointer transition-colors duration-200"
-              >
-                {active ? (
-                  <motion.div
-                    layoutId="filter-active-bg"
-                    className="absolute inset-0 rounded-full"
-                    style={{ background: "var(--primary)", boxShadow: "0 3px 10px rgba(0,0,0,0.15)" }}
-                    transition={{ type: "spring", stiffness: 360, damping: 28 }}
-                  />
-                ) : (
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: "var(--card-bg-secondary, rgba(0,0,0,0.05))",
-                      border: "1px solid var(--border-color, rgba(0,0,0,0.1))",
-                    }}
-                  />
-                )}
-                <span
-                  className="relative z-10"
-                  style={{ color: active ? "var(--nav-text-hover, #fff)" : "var(--foreground)" }}
-                >
-                  {cat}
-                </span>
-
-              </motion.button>
-            );
-          })}
-        </div>
+      <Reveal delay={0.1} className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+        {categories.map((cat) => {
+          const active = selectedCategory === cat;
+          return (
+            <motion.button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative px-4 py-1.5 rounded-full text-sm font-semibold cursor-pointer transition-colors duration-200"
+              style={{
+                backgroundColor: active ? "var(--primary)" : "var(--card-bg-secondary, rgba(0,0,0,0.05))",
+                color: active ? "var(--nav-text-hover, #fff)" : "var(--foreground)",
+                border: active ? "none" : "1px solid var(--border-color, rgba(0,0,0,0.1))",
+              }}
+            >
+              {active && (
+                <motion.div
+                  layoutId="filter-active-bg"
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: "var(--primary)" }}
+                  transition={{ type: "spring", stiffness: 360, damping: 28 }}
+                />
+              )}
+              <span className="relative z-10">{cat}</span>
+            </motion.button>
+          );
+        })}
       </Reveal>
 
       {/* ── Project count ── */}
@@ -427,7 +412,7 @@ export default function PortfolioClient({
 
       {/* ── Grid ── */}
       <div className="max-w-7xl mx-auto mb-20">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           <motion.div
             key={selectedCategory}
             initial={{ opacity: 0, y: 8 }}
