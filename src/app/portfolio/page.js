@@ -1,10 +1,13 @@
-import dynamic from "next/dynamic";
+import PortfolioClient from "@/components/PortfolioClient";
 import { categories, projects, tagColors } from "@/lib/portfolioData";
 
-const PortfolioClient = dynamic(() => import("@/components/PortfolioClient"));
-
 export const metadata = {
-  title: 'Portfolio'
+  title: "Portfolio",
+  description: "Explore Irfan Arshad's portfolio — projects built with Next.js, NestJS, React, Node.js, MongoDB and Flutter including VoiceApp, Rozgaar360, and more.",
+  openGraph: {
+    title: "Portfolio | Irfan Arshad",
+    description: "Projects built with Next.js, NestJS, React, Node.js, MongoDB and Flutter.",
+  },
 };
 
 export default function PortfolioPage() {

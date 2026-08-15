@@ -1,10 +1,13 @@
-import dynamic from "next/dynamic";
+import HomeClient from "@/components/HomeClient";
 import { skills } from "@/lib/aboutData";
 
-const HomeClient = dynamic(() => import("@/components/HomeClient"));
-
 export const metadata = {
-  title: 'Home - My Self Irfan'
+  title: "Home",
+  description: "Hi, I'm Irfan Arshad — a Full Stack Developer building scalable web apps with Next.js, NestJS, React, Node.js and MongoDB.",
+  openGraph: {
+    title: "Irfan Arshad | Full Stack Developer",
+    description: "Hi, I'm Irfan Arshad — a Full Stack Developer building scalable web apps with Next.js, NestJS, React, Node.js and MongoDB.",
+  },
 };
 
 export default function Home() {

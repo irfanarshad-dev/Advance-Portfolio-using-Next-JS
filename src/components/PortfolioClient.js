@@ -17,16 +17,17 @@ const getWhatsAppLink = (projectTitle) => {
 };
 
 // ─── Scroll reveal helper ────────────────────────────────────────────────────
-const Reveal = ({ children, delay = 0, y = 28, className = "" }) => {
+const Reveal = ({ children, delay = 0, y = 20, className = "" }) => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const inView = useInView(ref, { once: true, margin: "-30px" });
   return (
     <motion.div
       ref={ref}
       className={className}
       initial={{ opacity: 0, y }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{ willChange: "transform" }}
     >
       {children}
     </motion.div>
@@ -51,9 +52,9 @@ const ProjectCard = ({ project, tagColors, index, onOpen }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.45, delay: (index % 3) * 0.07, ease: "easeOut" }}
+      transition={{ duration: 0.4, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
       onClick={() => onOpen(project)}
       className="group relative flex flex-col h-full cursor-pointer"
       style={{
@@ -62,8 +63,9 @@ const ProjectCard = ({ project, tagColors, index, onOpen }) => {
         border: "1px solid var(--border-color, rgba(0,0,0,0.08))",
         overflow: "hidden",
         transition: "border-color 0.2s ease",
+        willChange: "transform",
       }}
-      whileHover={{ y: -3 }}
+      whileHover={{ y: -4, transition: { type: "spring", stiffness: 300, damping: 22 } }}
     >
       {/* ── Image ── */}
       <div className="relative overflow-hidden" style={{ height: 168, flexShrink: 0, background: "var(--card-bg-secondary, #f5f5f5)" }}>

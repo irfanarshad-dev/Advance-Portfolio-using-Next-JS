@@ -91,19 +91,20 @@ const SkillCard = ({ skill, index }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 28, scale: 0.92 }}
+      initial={{ opacity: 0, y: 20, scale: 0.94 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{
-        duration: 0.55,
-        delay: index * 0.04,
+        duration: 0.4,
+        delay: index * 0.03,
         ease: [0.22, 1, 0.36, 1],
       }}
       whileHover={{
         y: -5,
         scale: 1.07,
-        transition: { duration: 0.18, ease: "easeOut" },
+        transition: { type: "spring", stiffness: 300, damping: 20 },
       }}
       whileTap={{ scale: 0.96 }}
+      style={{ willChange: "transform" }}
     >
       <Card>
         <div
@@ -180,22 +181,18 @@ const TimelineEntry = ({ item, index }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: -24, scale: 0.97 }}
-      animate={inView ? { opacity: 1, x: 0, scale: 1 } : {}}
+      initial={{ opacity: 0, x: -20 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{
-        duration: 0.6,
-        delay: index * 0.18,
+        duration: 0.45,
+        delay: index * 0.12,
         ease: [0.22, 1, 0.36, 1],
       }}
-      style={{ position: "relative" }}
+      style={{ position: "relative", willChange: "transform" }}
     >
       <TimelineDot icon={item.icon} />
       <motion.div
-        whileHover={{
-          y: -3,
-          scale: 1.015,
-          transition: { duration: 0.18, ease: "easeOut" },
-        }}
+        whileHover={{ y: -3, transition: { type: "spring", stiffness: 300, damping: 20 } }}
         whileTap={{ scale: 0.99 }}
       >
         <Card>
@@ -222,15 +219,15 @@ const TimelineEntry = ({ item, index }) => {
 // ── Scroll-triggered section wrapper ──────────────────────────────────────
 const ScrollSection = ({ children, delay = 0, className = "" }) => {
   const ref = React.useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 36 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -341,16 +338,7 @@ const About = () => {
   };
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key="about-page"
-        variants={pageVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        style={{ overflow: "hidden" }}
-      >
-        <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-20 sm:py-12 md:py-16 lg:py-20 px-2 sm:px-4 lg:px-[100px]">
+    <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-20 sm:py-12 md:py-16 lg:py-20 px-2 sm:px-4 md:px-8 lg:px-[100px]">
           <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
             {/* ── Header ── */}
             <ScrollSection
@@ -386,7 +374,7 @@ const About = () => {
             </ScrollSection>
 
             {/* ── Personal Info + Stats ── */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10">
               {/* Personal Info Card */}
               <ScrollSection delay={0.1}>
                 <motion.div
@@ -582,7 +570,7 @@ const About = () => {
             </ScrollSection>
 
             {/* ── Experience & Education ── */}
-            <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
+            <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
               {/* Experience */}
               <ScrollSection delay={0}>
                 <h3 className="text-2xl md:text-3xl font-semibold mb-6 md:mb-8">
@@ -611,8 +599,6 @@ const About = () => {
             </div>
           </div>
         </section>
-      </motion.div>
-    </AnimatePresence>
   );
 };
 

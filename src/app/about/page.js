@@ -1,10 +1,13 @@
-import dynamic from 'next/dynamic';
+import About from '@/components/about';
 import { skills } from "@/lib/aboutData";
 
-const About = dynamic(() => import('@/components/about'));
-
 export const metadata = {
-    title: 'About'
+    title: "About",
+    description: "Learn about Irfan Arshad — Full Stack Developer with 4+ years of experience in Next.js, NestJS, React, Node.js, MongoDB, Flutter and Python.",
+    openGraph: {
+      title: "About Irfan Arshad | Full Stack Developer",
+      description: "4+ years experience in Next.js, NestJS, React, Node.js, MongoDB, Flutter and Python.",
+    },
 };
 
 export default function AboutPage() {

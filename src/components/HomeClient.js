@@ -2,9 +2,7 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import dynamic from "next/dynamic";
-
-const About = dynamic(() => import("@/components/about"), { ssr: false });
+import About from "@/components/about";
 
 // Typing animation hook
 function useTypingAnimation(strings, typeSpeed = 60, backSpeed = 40, pauseTime = 1500) {
@@ -74,18 +72,17 @@ export default function HomeClient({ skills = [] }) {
 
   return (
     <div
-      className={`min-w-screen flex flex-col lg:flex-row text-[var(--foreground)] overflow-x-hidden transition-all duration-1000 ease-out ${
+      className={`min-w-screen flex flex-col md:flex-row text-[var(--foreground)] overflow-x-hidden transition-all duration-1000 ease-out ${
         isVisible ? "slide-enter" : "opacity-0"
       }`}
     >
       {/* Left side (image + yellow shape) */}
       <div
-        className="flex flex-col w-full lg:w-1/2 items-center relative lg:justify-center pt-4 sm:pt-6 md:pt-4 lg:pt-0 pb-2 sm:pb-4 lg:pb-0 lg:h-screen"
-        style={{ minHeight: "35vh", height: "auto" }}
+        className="flex flex-col w-full md:w-[45%] lg:w-1/2 items-center relative md:justify-center pt-4 sm:pt-6 md:pt-0 pb-2 sm:pb-4 md:pb-0 md:h-screen"
       >
         {/* Yellow Skewed Shape - desktop */}
         <div
-          className="hidden lg:block absolute"
+          className="hidden md:block absolute"
           style={{
             position: "fixed",
             height: "200%",
@@ -101,7 +98,7 @@ export default function HomeClient({ skills = [] }) {
 
         {/* Yellow Skewed Shape - mobile */}
         <div
-          className="lg:hidden absolute top-0 left-0 w-full"
+          className="md:hidden absolute top-0 left-0 w-full"
           style={{
             height: "25vh",
             backgroundColor: "var(--primary)",
@@ -122,13 +119,10 @@ export default function HomeClient({ skills = [] }) {
 
         {/* Profile Image */}
         <div
-          className={`relative mx-auto rounded-full lg:rounded-[30px] w-32 h-32 xs:w-36 xs:h-36 sm:w-48 sm:h-48 md:w-[280px] md:h-[280px] lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[514px] overflow-hidden shadow-lg mt-6 sm:mt-8 md:mt-6 lg:mt-0 ${
+          className={`relative mx-auto rounded-full md:rounded-[30px] w-32 h-32 xs:w-36 xs:h-36 sm:w-48 sm:h-48 md:w-[85%] md:h-[75vh] lg:w-[600px] lg:h-[calc(100vh-80px)] xl:w-[514px] overflow-hidden shadow-lg mt-6 sm:mt-8 md:mt-0 ${
             isVisible ? "profile-image-animate" : "opacity-0"
           }`}
-          style={{
-            boxShadow: "0 0 10px rgba(0, 0, 0, .9)",
-            zIndex: 11,
-          }}
+          style={{ boxShadow: "0 0 10px rgba(0, 0, 0, .9)", zIndex: 11 }}
         >
           <Image
             src="/Images/Irfan-Pic.png"
@@ -150,15 +144,15 @@ export default function HomeClient({ skills = [] }) {
       </div>
 
       {/* Main content */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start lg:justify-center justify-start py-3 px-4 sm:p-6 md:p-8 lg:p-8 mt-2 sm:mt-6 md:mt-4 lg:mt-0 lg:h-screen">
-        <div className="text-center lg:text-left space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 max-w-full sm:max-w-md md:max-w-2xl lg:max-w-lg w-full">
+      <div className="w-full md:w-[55%] lg:w-1/2 flex flex-col items-center md:items-start md:justify-center justify-start py-3 px-4 sm:p-6 md:px-8 md:py-6 lg:p-8 mt-2 sm:mt-6 md:mt-0 md:h-screen">
+        <div className="text-center md:text-left space-y-3 sm:space-y-4 md:space-y-4 max-w-full sm:max-w-md md:max-w-lg w-full">
 
           {/* ✅ NEW: Software Engineer Tag - Top */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex items-center justify-center lg:justify-start"
+            className="flex items-center justify-center md:justify-start"
           >
             <span
               className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono tracking-widest uppercase"
@@ -172,7 +166,7 @@ export default function HomeClient({ skills = [] }) {
 
           {/* Name */}
           <h1
-            className={`text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-4xl mt-0 overflow-hidden py-1 sm:py-2 font-bold text-[var(--primary)] ${
+            className={`text-xl xs:text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-4xl mt-0 overflow-hidden py-1 sm:py-2 font-bold text-[var(--primary)] ${
               isVisible ? "content-title-animate" : "opacity-0"
             } tracking-tight leading-tight`}
           >
@@ -181,7 +175,7 @@ export default function HomeClient({ skills = [] }) {
 
           {/* ✅ UPDATED: Typing Animation Intro */}
           <p
-            className={`text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-xl text-center sm:text-left text-[var(--foreground)] px-2 sm:px-0 ${
+            className={`text-sm xs:text-base sm:text-lg md:text-base lg:text-xl xl:text-xl text-center md:text-left text-[var(--foreground)] px-2 sm:px-0 ${
               isVisible ? "content-text-animate" : "opacity-0"
             } leading-relaxed`}
           >
@@ -212,7 +206,7 @@ export default function HomeClient({ skills = [] }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap gap-2 justify-center lg:justify-start"
+            className="flex flex-wrap gap-2 justify-center md:justify-start"
           >
             {["Next.js", "NestJS", "React", "Node.js", "TypeScript", "Python"].map((tech) => (
               <span
