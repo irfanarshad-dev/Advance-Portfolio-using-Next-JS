@@ -124,6 +124,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -138,6 +139,25 @@ export default function ChatWidget() {
       return () => clearTimeout(t);
     }
   }, [open]);
+
+  // Mobile keyboards shrink the visual viewport without shrinking window.innerHeight,
+  // so a fixed-position panel using vh units gets covered by the keyboard.
+  // Tracking visualViewport lets us lift the panel to sit right above the keyboard.
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.visualViewport) return;
+    const vv = window.visualViewport;
+    const handleResize = () => {
+      const offset = window.innerHeight - vv.height - vv.offsetTop;
+      setKeyboardOffset(offset > 60 ? offset : 0);
+    };
+    vv.addEventListener("resize", handleResize);
+    vv.addEventListener("scroll", handleResize);
+    handleResize();
+    return () => {
+      vv.removeEventListener("resize", handleResize);
+      vv.removeEventListener("scroll", handleResize);
+    };
+  }, []);
 
   async function sendMessage(text) {
     const content = text ?? input;
@@ -271,8 +291,13 @@ export default function ChatWidget() {
             className="fixed z-[60] right-4 sm:right-6 bottom-[146px] lg:bottom-24"
             style={{
               zIndex: 60,
+              bottom: keyboardOffset > 0 ? keyboardOffset + 8 : undefined,
               width: "min(370px, calc(100vw - 32px))",
-              height: "min(500px, calc(100vh - 160px))",
+              height:
+                keyboardOffset > 0
+                  ? `min(420px, calc(100dvh - ${keyboardOffset + 90}px))`
+                  : "min(500px, calc(100dvh - 160px))",
+              maxHeight: keyboardOffset > 0 ? "70dvh" : undefined,
               borderRadius: 20,
               border: "1px solid var(--border-color)",
               background: "var(--card-bg)",
@@ -502,7 +527,7 @@ export default function ChatWidget() {
                   border: "1px solid var(--border-color)",
                   background: "var(--background)",
                   color: "var(--foreground)",
-                  fontSize: 13.5,
+                  fontSize: 16,
                   outline: "none",
                 }}
               />
