@@ -5,6 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import LaunchIcon from "@mui/icons-material/Launch";
+import CloseIcon from "@mui/icons-material/Close";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
+// Repos are private — instead of a dead/blocked GitHub link, route interested
+// visitors to a pre-filled WhatsApp message so Irfan can share access manually.
+const WHATSAPP_NUMBER = "923221649011";
+const getWhatsAppLink = (projectTitle) => {
+  const message = `Hi Irfan! I checked out your "${projectTitle}" project on your portfolio and I'd like to see the source code. Could you share access?`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+};
 
 // ─── Scroll reveal helper ────────────────────────────────────────────────────
 const Reveal = ({ children, delay = 0, y = 28, className = "" }) => {
@@ -55,120 +65,44 @@ const ProjectCard = ({ project, tagColors, index, onOpen }) => {
       }}
       whileHover={{ y: -3 }}
     >
-      {/* ── Colored top accent bar ── */}
-      <div
-        style={{
-          height: 3,
-          background: `linear-gradient(90deg, ${accent.dot}, ${accent.dot}00)`,
-          width: "100%",
-          flexShrink: 0,
-        }}
-      />
-
-      {/* ── Image with hover overlay ── */}
-      <div className="relative overflow-hidden" style={{ height: 200, flexShrink: 0, background: "var(--card-bg-secondary, #f5f5f5)" }}>
-        <motion.div
-          className="w-full h-full relative"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-            style={{ objectPosition: "top center" }}
-          />
-        </motion.div>
-
-        {/* gradient overlay */}
-        <div
-          className="absolute inset-0 transition-opacity duration-400"
-          style={{
-            background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)",
-            opacity: 0,
-          }}
-          // CSS class handles opacity — we use group-hover via tailwind below
+      {/* ── Image ── */}
+      <div className="relative overflow-hidden" style={{ height: 168, flexShrink: 0, background: "var(--card-bg-secondary, #f5f5f5)" }}>
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+          style={{ objectPosition: "top center" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-350" />
 
-        {/* Number badge — top-left */}
+        {/* Persistent "clickable" hint — visible even before hover */}
         <div
-          className="absolute top-3 left-3 z-10"
-          style={{
-            background: "rgba(0,0,0,0.55)",
-            backdropFilter: "blur(6px)",
-            color: "#fff",
-            fontSize: 11,
-            fontWeight: 700,
-            fontFamily: "monospace",
-            letterSpacing: "0.08em",
-            padding: "3px 9px",
-            borderRadius: 20,
-          }}
+          className="absolute top-2.5 right-2.5 flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-full transition-all duration-200 group-hover:scale-105"
+          style={{ background: "rgba(0,0,0,0.55)", color: "#fff", backdropFilter: "blur(4px)" }}
         >
-          {project.number}
+          <VisibilityIcon style={{ fontSize: 12 }} />
+          Details
         </div>
 
-        {/* Live badge — top-right */}
-        <div
-          className="absolute top-10 right-3 z-10 flex items-center gap-1.5"
-          style={{
-            background: "rgba(16,185,129,0.18)",
-            backdropFilter: "blur(6px)",
-            border: "1px solid rgba(16,185,129,0.45)",
-            color: "#10B981",
-            fontSize: 10,
-            fontWeight: 700,
-            padding: "3px 9px",
-            borderRadius: 20,
-          }}
-        >
-          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#10B981", animation: "pulse 2s infinite", display: "inline-block" }} />
-          Live
-        </div>
-
-        {/* Action buttons — appear on hover, centered */}
-        <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-          <Link href={project.github} target="_blank" rel="noopener noreferrer">
-            <motion.div
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.92 }}
-              style={{
-                background: "rgba(255,255,255,0.15)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255,255,255,0.3)",
-                borderRadius: "50%",
-                padding: 10,
-                color: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-            >
-              <GitHubIcon style={{ fontSize: 20 }} />
-            </motion.div>
-          </Link>
-          <Link href={project.demo} target="_blank" rel="noopener noreferrer">
-            <motion.div
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.92 }}
-              style={{
-                background: "rgba(255,255,255,0.15)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255,255,255,0.3)",
-                borderRadius: "50%",
-                padding: 10,
-                color: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-            >
-              <LaunchIcon style={{ fontSize: 20 }} />
-            </motion.div>
+        {/* Hover overlay with actions */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/45 transition-colors duration-250 flex items-center justify-center gap-3">
+          <span
+            onClick={(e) => { e.stopPropagation(); window.open(getWhatsAppLink(project.title), "_blank", "noopener,noreferrer"); }}
+            title="Request source access on WhatsApp"
+            className="w-9 h-9 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
+            style={{ background: "rgba(255,255,255,0.9)", color: "#25D366" }}
+          >
+            <FaWhatsapp size={17} />
+          </span>
+          <Link
+            href={project.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="w-9 h-9 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            style={{ background: "rgba(255,255,255,0.9)", color: "#171717" }}
+          >
+            <LaunchIcon style={{ fontSize: 17 }} />
           </Link>
         </div>
       </div>
@@ -233,12 +167,10 @@ const ProjectCard = ({ project, tagColors, index, onOpen }) => {
           className="mt-auto flex items-center justify-between pt-3"
           style={{ borderTop: "1px solid var(--border-color, rgba(0,0,0,0.07))" }}
         >
-          {/* GitHub micro-link */}
-          <Link
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[11px] font-medium transition-opacity duration-200 opacity-50 hover:opacity-100"
+          {/* WhatsApp — request source access */}
+          <span
+            onClick={(e) => { e.stopPropagation(); window.open(getWhatsAppLink(project.title), "_blank", "noopener,noreferrer"); }}
+            className="flex items-center gap-1.5 text-[11px] font-medium transition-opacity duration-200 opacity-50 hover:opacity-100 cursor-pointer"
             style={{ color: "var(--foreground)" }}
           >
             <FaWhatsapp size={13} />
@@ -262,6 +194,146 @@ const ProjectCard = ({ project, tagColors, index, onOpen }) => {
         </div>
       </div>
     </motion.div>
+  );
+};
+
+// ─── Project Detail Modal ───────────────────────────────────────────────────
+const ProjectModal = ({ project, onClose }) => {
+  useEffect(() => {
+    if (!project) return;
+    document.body.style.overflow = "hidden";
+    const handleKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [project, onClose]);
+
+  if (!project) return null;
+  const accent = CATEGORY_ACCENTS[project.category] || CATEGORY_ACCENTS.default;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={onClose}
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4"
+        style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(3px)" }}
+      >
+        <motion.div
+          key="modal"
+          initial={{ opacity: 0, y: 24, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 24, scale: 0.96 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full sm:max-w-lg md:max-w-xl overflow-y-auto custom-scrollbar"
+          style={{
+            maxHeight: "92dvh",
+            borderRadius: 16,
+            background: "var(--card-bg, var(--background))",
+            border: "1px solid var(--border-color, rgba(0,0,0,0.08))",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="absolute top-3 right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-transform hover:scale-105"
+            style={{ background: "rgba(0,0,0,0.6)", color: "#fff", backdropFilter: "blur(4px)" }}
+          >
+            <CloseIcon style={{ fontSize: 18 }} />
+          </button>
+
+          {/* Image — scales cleanly across breakpoints, keeps full image visible on small screens */}
+          <div className="relative w-full h-44 xs:h-48 sm:h-56 md:h-64" style={{ background: "var(--card-bg-secondary, #f5f5f5)" }}>
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 640px) 100vw, 576px"
+              className="object-cover"
+              style={{ objectPosition: "top center" }}
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+          </div>
+
+          {/* Body */}
+          <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span
+                className={`inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${accent.label}`}
+              >
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: accent.dot, flexShrink: 0 }} />
+                {project.category}
+              </span>
+              {project.number && (
+                <span className="text-[10px] font-mono opacity-40" style={{ color: "var(--foreground)" }}>
+                  #{project.number}
+                </span>
+              )}
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-extrabold mb-3" style={{ color: "var(--foreground)" }}>
+              {project.title}
+            </h2>
+
+            <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--nav-text)" }}>
+              {project.description}
+            </p>
+
+            {/* Tech stack */}
+            <div className="mb-6">
+              <h4 className="text-xs font-bold uppercase tracking-wider mb-2 opacity-60" style={{ color: "var(--foreground)" }}>
+                Tech Stack
+              </h4>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[11px] px-2.5 py-1 rounded-md border font-medium bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+              <Link
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm"
+                style={{ background: "var(--primary)", color: "var(--nav-text-hover, #fff)" }}
+              >
+                <LaunchIcon style={{ fontSize: 16 }} />
+                Live Demo
+              </Link>
+              <button
+                onClick={() => window.open(getWhatsAppLink(project.title), "_blank", "noopener,noreferrer")}
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm border"
+                style={{ borderColor: "#25D366", color: "#25D366" }}
+              >
+                <FaWhatsapp size={16} />
+                Request Source Access
+              </button>
+            </div>
+            <p className="text-[11px] mt-2.5 text-center opacity-50" style={{ color: "var(--nav-text)" }}>
+              Source repos are private — message on WhatsApp for access.
+            </p>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
@@ -297,34 +369,47 @@ export default function PortfolioClient({
       </Reveal>
 
       {/* ── Filter Pills ── */}
-      <Reveal delay={0.1} className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
-        {categories.map((cat) => {
-          const active = selectedCategory === cat;
-          return (
-            <motion.button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative px-4 py-1.5 rounded-full text-sm font-semibold cursor-pointer transition-colors duration-200"
-              style={{
-                backgroundColor: active ? "var(--primary)" : "var(--card-bg-secondary, rgba(0,0,0,0.05))",
-                color: active ? "var(--nav-text-hover, #fff)" : "var(--foreground)",
-                border: active ? "none" : "1px solid var(--border-color, rgba(0,0,0,0.1))",
-              }}
-            >
-              {active && (
-                <motion.div
-                  layoutId="filter-active-bg"
-                  className="absolute inset-0 rounded-full"
-                  style={{ background: "var(--primary)" }}
-                  transition={{ type: "spring", stiffness: 360, damping: 28 }}
-                />
-              )}
-              <span className="relative z-10">{cat}</span>
-            </motion.button>
-          );
-        })}
+      <Reveal delay={0.1} className="mb-10">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 py-1">
+          {categories.map((cat) => {
+            const active = selectedCategory === cat;
+            const count =
+              cat === "All" ? projects.length : projects.filter((p) => p.tags.includes(cat)).length;
+            return (
+              <motion.button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                className="relative flex-shrink-0 flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full text-[11px] sm:text-sm font-semibold cursor-pointer transition-colors duration-200"
+              >
+                {active ? (
+                  <motion.div
+                    layoutId="filter-active-bg"
+                    className="absolute inset-0 rounded-full"
+                    style={{ background: "var(--primary)", boxShadow: "0 3px 10px rgba(0,0,0,0.15)" }}
+                    transition={{ type: "spring", stiffness: 360, damping: 28 }}
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: "var(--card-bg-secondary, rgba(0,0,0,0.05))",
+                      border: "1px solid var(--border-color, rgba(0,0,0,0.1))",
+                    }}
+                  />
+                )}
+                <span
+                  className="relative z-10"
+                  style={{ color: active ? "var(--nav-text-hover, #fff)" : "var(--foreground)" }}
+                >
+                  {cat}
+                </span>
+
+              </motion.button>
+            );
+          })}
+        </div>
       </Reveal>
 
       {/* ── Project count ── */}
